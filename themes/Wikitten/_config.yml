@@ -15,8 +15,8 @@ customize:
         url: /logo.png
     profile:
         enabled: true # Whether to show profile bar
-        avatar: # css/images/avatar.png
-        gravatar: readlnh@163.com # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
+        avatar: https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg # css/images/avatar.png
+        # gravatar: readlnh@163.com # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
         author: readlnh
         author_title: Programmer & Joker
         location: Shaoxing, China
@@ -29,8 +29,9 @@ customize:
     default_index_file: index.md # if this, it will display at site index instead of default index page
     social_links:
         github: https://github.com/readlnh
-        stack-overflow: http://stackoverflow.com/users/7277090/zthxxx?tab=profile
-        codepen: http://codepen.io/zthxxx/
+        # stack-overflow: http://stackoverflow.com/users/7277090/zthxxx?tab=profile
+        # codepen: http://codepen.io/zthxxx/
+        zhihu: https://youtube.com 
         rss: /atom.xml
     social_link_tooltip: true # enable the social link tooltip, options: true, false
 
