@@ -1,5 +1,5 @@
 ---
-title: Rust by example notes II
+title: Primitives
 date: 2019-11-05 15:11
 tags: 
     - Rust

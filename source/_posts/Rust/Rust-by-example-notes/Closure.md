@@ -1,5 +1,5 @@
 ---
-title: Rust by example notes III
+title: Closure
 date: 2019-11-27 18:44
 tags: 
     - Rust

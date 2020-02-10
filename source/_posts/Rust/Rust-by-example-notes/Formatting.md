@@ -1,5 +1,5 @@
 ---
-title: Rust by example notes (I)
+title: Formatting
 date: 2019-11-01 19:35
 tags: 
     - Rust
