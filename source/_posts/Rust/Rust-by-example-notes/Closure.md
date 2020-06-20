@@ -293,6 +293,8 @@ fn main() {
 }
 ```
 
+Note: `impl xxTrait` means a type that implements `xxTrait`. 
+
 
 
 
