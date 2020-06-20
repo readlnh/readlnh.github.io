@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://readlnh.github.io/2020/06/20/Rust/Rust-by-example-notes/Modules/</loc>
+    
+    <lastmod>2020-06-20T11:32:30.477Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/27/Rust/Rust-by-example-notes/Closure/</loc>
+    
+    <lastmod>2020-03-25T08:18:54.252Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://readlnh.github.io/2020/03/25/hello-world/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
@@ -16,14 +30,7 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/cgroup/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2020/03/25/Linux/APUE/pipe1/</loc>
+    <loc>http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -37,49 +44,14 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/%25E5%25A6%2582%25E4%25BD%2595%25E5%259C%25A8docker%25E4%25B8%25AD%25E8%25BF%2590%25E8%25A1%258Cubuntukylin%25E6%25A1%258C%25E9%259D%25A2%25E7%25B3%25BB%25E7%25BB%259F/</loc>
+    <loc>http://readlnh.github.io/2020/03/25/Linux/APUE/pipe1/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2019/11/27/Rust/Rust-by-example-notes/Closure/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2019/11/05/Rust/Rust-by-example-notes/Primitives/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://readlnh.github.io/2019/11/22/Rust/substrate/substrate-workshop_notes/</loc>
+    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/cgroup/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -93,7 +65,35 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/about/index.html</loc>
+    <loc>http://readlnh.github.io/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/%25E5%25A6%2582%25E4%25BD%2595%25E5%259C%25A8docker%25E4%25B8%25AD%25E8%25BF%2590%25E8%25A1%258Cubuntukylin%25E6%25A1%258C%25E9%259D%25A2%25E7%25B3%25BB%25E7%25BB%259F/</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/05/Rust/Rust-by-example-notes/Primitives/</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/22/Rust/substrate/substrate-workshop_notes/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -101,6 +101,13 @@
   
   <url>
     <loc>http://readlnh.github.io/categories/index.html</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/about/index.html</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
