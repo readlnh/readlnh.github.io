@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://readlnh.github.io/"/>
-  <updated>2020-06-20T11:32:30.477Z</updated>
+  <updated>2020-06-20T12:25:27.084Z</updated>
   <id>http://readlnh.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://readlnh.github.io/2020/06/20/Rust/local_unpublished_crate_in_Rust/"/>
+    <id>http://readlnh.github.io/2020/06/20/Rust/local_unpublished_crate_in_Rust/</id>
+    <published>2020-06-20T12:26:12.812Z</published>
+    <updated>2020-06-20T12:25:27.084Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="How-to-use-local-unpublished-crate-in-Rust-by-cargo"><a href="#How-to-use-local-unpublished-crate-in-Rust-by-cargo" class="headerlink" title="How to use local unpublished crate in Rust by cargo"></a>How to use local unpublished crate in Rust by cargo</h1><p>Cargo is configured to look for dependencies on <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a> by defalut. However I want to use a local crate. Fortunately, cargo supports to use libraries ont only on  <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a>, but also ther registries, <code>git</code> repositories or subdirectories on our local file system.</p><h2 id="create-a-lib"><a href="#create-a-lib" class="headerlink" title="create a lib"></a>create a <code>lib</code></h2><p>Firstly, create a new package:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cargo new test_crate --lib</span><br></pre></td></tr></table></figure><p>Here we pass <code>--lib</code> because we’re making a library. Then the cargo generates:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Cargo.lock</span><br><span class="line">├── Cargo.toml</span><br><span class="line">└── src</span><br><span class="line">    └── lib.rs</span><br><span class="line"></span><br><span class="line">1 directory, 3 files</span><br></pre></td></tr></table></figure><p>Let’s do something in <code>lib.rs</code>.</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">public_function_in_test_crate</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"called `public_function_in_test_crate`"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> cool &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">cool_function</span></span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"called `cool::cool_function`"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="set-Cargo-toml"><a href="#set-Cargo-toml" class="headerlink" title="set Cargo.toml"></a>set <code>Cargo.toml</code></h2><p>Then we create a new binary program use <code>cargo new test_extern_crate</code> and add a dependency section to our executable’s <code>Cargo.toml</code> and sepcify the path:</p><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">test_crate</span> = &#123;path = <span class="string">"../test_crate"</span>&#125;</span><br></pre></td></tr></table></figure><p>or</p><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies.test_crate]</span></span><br><span class="line"><span class="attr">path</span> = <span class="string">"../test_crate"</span></span><br></pre></td></tr></table></figure><p>Now we can use our local crate <code>test_crate</code> as folliwing:</p><p><em>main.rs:</em></p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> test_crate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> test_crate::cool;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    test_crate::public_function_in_test_crate();</span><br><span class="line">    test_crate::cool::cool_function();</span><br><span class="line">    cool::cool_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>more details in more detals in <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html" target="_blank" rel="noopener">Cargo book</a> .</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;How-to-use-local-unpublished-crate-in-Rust-by-cargo&quot;&gt;&lt;a href=&quot;#How-to-use-local-unpublished-crate-in-Rust-by-cargo&quot; class=&quot;headerlin
+      
+    
+    </summary>
+    
+    
+      <category term="Rust" scheme="http://readlnh.github.io/categories/Rust/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Modules</title>
@@ -99,33 +123,6 @@
   </entry>
   
   <entry>
-    <title>docker技术分析 - linux namespce机制</title>
-    <link href="http://readlnh.github.io/2020/03/25/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/"/>
-    <id>http://readlnh.github.io/2020/03/25/Linux/docker/linux namespce机制初探/</id>
-    <published>2020-03-25T07:41:04.469Z</published>
-    <updated>2020-03-25T07:41:04.469Z</updated>
-    
-    <content type="html"><![CDATA[<p>docker技术是近年来无比火热的技术，不管是哪个领域大家都在研究和使用docker。<br>我们在使用docker的时候经常听人说，docker是基于linux内核的Namespace和Cgroup技术实现的。那么究竟什么是Namespace技术呢？</p><h2 id="linux-namespce"><a href="#linux-namespce" class="headerlink" title="linux namespce"></a>linux namespce</h2><p>linux的namespce机制提供了一种资源隔离方案，它是Linux平台实现容器这种轻量级的虚拟化的基础。namespce使得PID，IPC，NetWork等系统资源不再是全局性，而是属于特定的namespace的，只需要在clone的时候指定相应的flag，就可以创建相应的namespce。大部分容器就是利用了这一技术实现了资源的隔离，不同容器内的进程属于不同的namespace，彼此透明互不干扰。</p><p>目前linux实现了以下6种Namespace</p><ul><li>Mount namespaces(2.4.19)</li><li>UTS namespaces(2.6.19)</li><li>IPC namespaces(2.6.19)</li><li>PID namespaces(2.6.24)</li><li>Network namespaces(2.6.29)</li><li>User namespaces(3.8)</li></ul><h3 id="Mount-namespaces"><a href="#Mount-namespaces" class="headerlink" title="Mount namespaces"></a>Mount namespaces</h3><p>Mount namespaces为一组进程隔离了一系列的文件系统挂载点。在不同Mount namespaces的进程有不同的文件系统层次视图。通过使用Mount namespaces，进程调用mount()和umount()函数时不再操作对所有进程可见的全局挂载点，而是只操作调用进程所关联的mount namespace。</p><p>使用Mount namespaces可以象chroot方式一样创建环境。但是，与使用chroot调用对比，Mount namespaces方式更加安全和灵活。</p><p>Mount namespaces是Linux中实现的第一种namespace(2002年)。</p><h3 id="UTS-namespaces"><a href="#UTS-namespaces" class="headerlink" title="UTS namespaces"></a>UTS namespaces</h3><p>UTS namespaces实现uname()系统调用返回的对两个系统描述符nodename和domainname的隔离（这两个值可以由sethostname()和setdomainname()系统调用来设置）。</p><p>在容器的上下文中，UTS namespaces允许每个容器有自己的hostname和NIS domain name。这对于基于这两个名字的初始化和配置脚本很有用。</p><h3 id="PID-namespaces"><a href="#PID-namespaces" class="headerlink" title="PID namespaces"></a>PID namespaces</h3><p>PID namespaces实现进程间ID空间隔离。在不同PID namespaces中的进程可以有相同的PID。PID namespaces的一个主要好处是容器可以在不同的主机上移植，保持容器内部的进程ID不变。</p><p>PID namespaces还允许每个容器有自己的init进程，及PID为1的进程，这个进程是容器中所有进程的祖先。</p><h3 id="NET-namespaces"><a href="#NET-namespaces" class="headerlink" title="NET namespaces"></a>NET namespaces</h3><p>NET namespaces提供对与网络相关的系统资源的隔离。每个Network namespace有自己的网络设备、IP地址、IP路由表、/proc/net目录，端口号等等。</p><p>也就是说同一台主机上的多个容器中的web服务器都可以绑定80端口。</p><h3 id="User-namespaces"><a href="#User-namespaces" class="headerlink" title="User namespaces"></a>User namespaces</h3><p>User namespaces提供对用户id和组id号码空间的资源隔离。在一个user namespaces内部和外部，一个进程有不同的userid和groupid。</p><p>User namespace可以让一个进程在User namespace内有root权限，而在User namespace外则只有普通权限。</p><h3 id="用go语言来操作namespace"><a href="#用go语言来操作namespace" class="headerlink" title="用go语言来操作namespace"></a>用go语言来操作namespace</h3><p>由于docker是用go语言实现的，故我这里也使用go语言来作为范例，创建一个utsnamespace。代码如下</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"os"</span></span><br><span class="line"><span class="string">"os/exec"</span></span><br><span class="line"><span class="string">"syscall"</span></span><br><span class="line"><span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">cmd := exec.Command(<span class="string">"sh"</span>)</span><br><span class="line">cmd.SysProcAttr = &amp;syscall.SysProcAttr&#123;</span><br><span class="line">Cloneflags: syscall.CLONE_NEWUTS,</span><br><span class="line">&#125;</span><br><span class="line">cmd.Stdin = os.Stdin</span><br><span class="line">cmd.Stdout = os.Stdout</span><br><span class="line">cmd.Stderr = os.Stderr</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err := cmd.Run(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里go语言帮我们封装了对clone函数的调用，我们在这里指定了系统调用的参数<code>Cloneflags: syscall.CLONE_NEWUTS</code>，系统会根据该参数去创建一个UTC Namespace并进入到一个sh环境中。<br>我们执行go build，再运行该程序，注意，这里我们需要以管理员权限来执行该程序，不然会提示如下错误。<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespace-test1.png" alt=""><br>我们运行该程序后似乎什么都没有发生，实际上我们已经进入新的namespace了<br>此时在终端输入hostname命令，发现和主机的hostname是一样的<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespace-test2.png" alt=""><br>我们在新建的namespace里修改hostname，此时我们在宿主机上再启动一个终端，执行hostname命令，发现宿主机的hostname并没有改变，由此可见UTC Namespce可以拥有自己的hostname。<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespce-test3.png" alt=""><br>这里我们只指定了一个参数，实际上我们可以在clone时同时指定多重命名空间，由此来达到进程的隔离，各位读者可以自行尝试。如果想使用c语言来进行尝试，只需要在调用clone()函数时指定相应参数即可，这里就不过多展开了。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;docker技术是近年来无比火热的技术，不管是哪个领域大家都在研究和使用docker。&lt;br&gt;我们在使用docker的时候经常听人说，docker是基于linux内核的Namespace和Cgroup技术实现的。那么究竟什么是Namespace技术呢？&lt;/p&gt;
-&lt;h2 id
-      
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://readlnh.github.io/categories/Linux/"/>
-    
-      <category term="docker" scheme="http://readlnh.github.io/categories/Linux/docker/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Pipe(管道)的一些理解</title>
     <link href="http://readlnh.github.io/2020/03/25/Linux/APUE/pipe1/"/>
     <id>http://readlnh.github.io/2020/03/25/Linux/APUE/pipe1/</id>
@@ -167,6 +164,33 @@
       
         &lt;p&gt;最近由于工作原因接触了docker，也就研究一下它的原理，主要看了阿里出的&amp;lt;&amp;lt;自己动手写docker&amp;gt;&amp;gt;，感觉蛮有意思，姑且记录一下。docker可以算是当前非常火热的技术了。我们知道docker基于Namespce和Cgroups，其中&lt;/p&gt;
 &lt;
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://readlnh.github.io/categories/Linux/"/>
+    
+      <category term="docker" scheme="http://readlnh.github.io/categories/Linux/docker/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>docker技术分析 - linux namespce机制</title>
+    <link href="http://readlnh.github.io/2020/03/25/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/"/>
+    <id>http://readlnh.github.io/2020/03/25/Linux/docker/linux namespce机制初探/</id>
+    <published>2020-03-25T07:41:04.469Z</published>
+    <updated>2020-03-25T07:41:04.469Z</updated>
+    
+    <content type="html"><![CDATA[<p>docker技术是近年来无比火热的技术，不管是哪个领域大家都在研究和使用docker。<br>我们在使用docker的时候经常听人说，docker是基于linux内核的Namespace和Cgroup技术实现的。那么究竟什么是Namespace技术呢？</p><h2 id="linux-namespce"><a href="#linux-namespce" class="headerlink" title="linux namespce"></a>linux namespce</h2><p>linux的namespce机制提供了一种资源隔离方案，它是Linux平台实现容器这种轻量级的虚拟化的基础。namespce使得PID，IPC，NetWork等系统资源不再是全局性，而是属于特定的namespace的，只需要在clone的时候指定相应的flag，就可以创建相应的namespce。大部分容器就是利用了这一技术实现了资源的隔离，不同容器内的进程属于不同的namespace，彼此透明互不干扰。</p><p>目前linux实现了以下6种Namespace</p><ul><li>Mount namespaces(2.4.19)</li><li>UTS namespaces(2.6.19)</li><li>IPC namespaces(2.6.19)</li><li>PID namespaces(2.6.24)</li><li>Network namespaces(2.6.29)</li><li>User namespaces(3.8)</li></ul><h3 id="Mount-namespaces"><a href="#Mount-namespaces" class="headerlink" title="Mount namespaces"></a>Mount namespaces</h3><p>Mount namespaces为一组进程隔离了一系列的文件系统挂载点。在不同Mount namespaces的进程有不同的文件系统层次视图。通过使用Mount namespaces，进程调用mount()和umount()函数时不再操作对所有进程可见的全局挂载点，而是只操作调用进程所关联的mount namespace。</p><p>使用Mount namespaces可以象chroot方式一样创建环境。但是，与使用chroot调用对比，Mount namespaces方式更加安全和灵活。</p><p>Mount namespaces是Linux中实现的第一种namespace(2002年)。</p><h3 id="UTS-namespaces"><a href="#UTS-namespaces" class="headerlink" title="UTS namespaces"></a>UTS namespaces</h3><p>UTS namespaces实现uname()系统调用返回的对两个系统描述符nodename和domainname的隔离（这两个值可以由sethostname()和setdomainname()系统调用来设置）。</p><p>在容器的上下文中，UTS namespaces允许每个容器有自己的hostname和NIS domain name。这对于基于这两个名字的初始化和配置脚本很有用。</p><h3 id="PID-namespaces"><a href="#PID-namespaces" class="headerlink" title="PID namespaces"></a>PID namespaces</h3><p>PID namespaces实现进程间ID空间隔离。在不同PID namespaces中的进程可以有相同的PID。PID namespaces的一个主要好处是容器可以在不同的主机上移植，保持容器内部的进程ID不变。</p><p>PID namespaces还允许每个容器有自己的init进程，及PID为1的进程，这个进程是容器中所有进程的祖先。</p><h3 id="NET-namespaces"><a href="#NET-namespaces" class="headerlink" title="NET namespaces"></a>NET namespaces</h3><p>NET namespaces提供对与网络相关的系统资源的隔离。每个Network namespace有自己的网络设备、IP地址、IP路由表、/proc/net目录，端口号等等。</p><p>也就是说同一台主机上的多个容器中的web服务器都可以绑定80端口。</p><h3 id="User-namespaces"><a href="#User-namespaces" class="headerlink" title="User namespaces"></a>User namespaces</h3><p>User namespaces提供对用户id和组id号码空间的资源隔离。在一个user namespaces内部和外部，一个进程有不同的userid和groupid。</p><p>User namespace可以让一个进程在User namespace内有root权限，而在User namespace外则只有普通权限。</p><h3 id="用go语言来操作namespace"><a href="#用go语言来操作namespace" class="headerlink" title="用go语言来操作namespace"></a>用go语言来操作namespace</h3><p>由于docker是用go语言实现的，故我这里也使用go语言来作为范例，创建一个utsnamespace。代码如下</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"os"</span></span><br><span class="line"><span class="string">"os/exec"</span></span><br><span class="line"><span class="string">"syscall"</span></span><br><span class="line"><span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">cmd := exec.Command(<span class="string">"sh"</span>)</span><br><span class="line">cmd.SysProcAttr = &amp;syscall.SysProcAttr&#123;</span><br><span class="line">Cloneflags: syscall.CLONE_NEWUTS,</span><br><span class="line">&#125;</span><br><span class="line">cmd.Stdin = os.Stdin</span><br><span class="line">cmd.Stdout = os.Stdout</span><br><span class="line">cmd.Stderr = os.Stderr</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err := cmd.Run(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Fatal(err)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这里go语言帮我们封装了对clone函数的调用，我们在这里指定了系统调用的参数<code>Cloneflags: syscall.CLONE_NEWUTS</code>，系统会根据该参数去创建一个UTC Namespace并进入到一个sh环境中。<br>我们执行go build，再运行该程序，注意，这里我们需要以管理员权限来执行该程序，不然会提示如下错误。<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespace-test1.png" alt=""><br>我们运行该程序后似乎什么都没有发生，实际上我们已经进入新的namespace了<br>此时在终端输入hostname命令，发现和主机的hostname是一样的<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespace-test2.png" alt=""><br>我们在新建的namespace里修改hostname，此时我们在宿主机上再启动一个终端，执行hostname命令，发现宿主机的hostname并没有改变，由此可见UTC Namespce可以拥有自己的hostname。<br><img src="https://raw.githubusercontent.com/readlnh/picture/master/utc-namespce-test3.png" alt=""><br>这里我们只指定了一个参数，实际上我们可以在clone时同时指定多重命名空间，由此来达到进程的隔离，各位读者可以自行尝试。如果想使用c语言来进行尝试，只需要在调用clone()函数时指定相应参数即可，这里就不过多展开了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;docker技术是近年来无比火热的技术，不管是哪个领域大家都在研究和使用docker。&lt;br&gt;我们在使用docker的时候经常听人说，docker是基于linux内核的Namespace和Cgroup技术实现的。那么究竟什么是Namespace技术呢？&lt;/p&gt;
+&lt;h2 id
       
     
     </summary>

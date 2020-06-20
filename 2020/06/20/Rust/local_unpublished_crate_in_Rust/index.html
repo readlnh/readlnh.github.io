@@ -4,17 +4,20 @@
     <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
     <meta charset="utf-8">
     
-    <title>Category: Rust-by-example-notes | Hexo</title>
+    <title>Hexo</title>
     
     
         <meta name="keywords" content="Hexo" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
+    <meta name="description" content="How to use local unpublished crate in Rust by cargoCargo is configured to look for dependencies on crates.io by defalut. However I want to use a local crate. Fortunately, cargo supports to use librari">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;readlnh.github.io&#x2F;categories&#x2F;Rust&#x2F;Rust-by-example-notes&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;readlnh.github.io&#x2F;2020&#x2F;06&#x2F;20&#x2F;Rust&#x2F;local_unpublished_crate_in_Rust&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="How to use local unpublished crate in Rust by cargoCargo is configured to look for dependencies on crates.io by defalut. However I want to use a local crate. Fortunately, cargo supports to use librari">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-06-20T12:25:27.084Z">
 <meta name="twitter:card" content="summary">
     
 
@@ -264,9 +267,9 @@
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/03/25/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
                     </li> 
                     
-                    <li class="directory">
+                    <li class="directory open">
                         <a href="#" data-role="directory">
-                            <i class="fa fa-folder"></i>
+                            <i class="fa fa-folder-open"></i>
                             &nbsp;
                             Rust
                         </a>
@@ -288,7 +291,7 @@
                         </a>
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
                     </li> 
-                     <li class="file"><a href="/2020/06/20/Rust/local_unpublished_crate_in_Rust/"></a></li>  </ul> 
+                     <li class="file active"><a href="/2020/06/20/Rust/local_unpublished_crate_in_Rust/"></a></li>  </ul> 
                     </li> 
                      <li class="file"><a href="/2020/03/25/hello-world/">Hello World</a></li>  </ul> 
     </div>
@@ -370,158 +373,73 @@
     <div id="toTop" class="fa fa-angle-up"></div>
 </aside>
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-folder"></i></span>
-        <h1 class="title">Rust-by-example-notes</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a>
-        </h1>
-    
+            <section id="main"><article id="post-Rust/local_unpublished_crate_in_Rust" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <h1 id="How-to-use-local-unpublished-crate-in-Rust-by-cargo"><a href="#How-to-use-local-unpublished-crate-in-Rust-by-cargo" class="headerlink" title="How to use local unpublished crate in Rust by cargo"></a>How to use local unpublished crate in Rust by cargo</h1><p>Cargo is configured to look for dependencies on <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a> by defalut. However I want to use a local crate. Fortunately, cargo supports to use libraries ont only on  <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a>, but also ther registries, <code>git</code> repositories or subdirectories on our local file system.</p>
+<h2 id="create-a-lib"><a href="#create-a-lib" class="headerlink" title="create a lib"></a>create a <code>lib</code></h2><p>Firstly, create a new package:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cargo new test_crate --lib</span><br></pre></td></tr></table></figure>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">
-            <time datetime="2020-06-20T11:32:00.000Z" itemprop="datePublished">2020-06-20</time>
-        </a>
-    </div>
+<p>Here we pass <code>--lib</code> because we’re making a library. Then the cargo generates:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Cargo.lock</span><br><span class="line">├── Cargo.toml</span><br><span class="line">└── src</span><br><span class="line">    └── lib.rs</span><br><span class="line"></span><br><span class="line">1 directory, 3 files</span><br></pre></td></tr></table></figure>
 
+<p>Let’s do something in <code>lib.rs</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">public_function_in_test_crate</span></span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"called `public_function_in_test_crate`"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> cool &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">cool_function</span></span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"called `cool::cool_function`"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
-    </div>
+<h2 id="set-Cargo-toml"><a href="#set-Cargo-toml" class="headerlink" title="set Cargo.toml"></a>set <code>Cargo.toml</code></h2><p>Then we create a new binary program use <code>cargo new test_extern_crate</code> and add a dependency section to our executable’s <code>Cargo.toml</code> and sepcify the path:</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">test_crate</span> = &#123;path = <span class="string">"../test_crate"</span>&#125;</span><br></pre></td></tr></table></figure>
 
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Modules/" rel="tag">Modules</a>, <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>
-    </div>
+<p>or</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies.test_crate]</span></span><br><span class="line"><span class="attr">path</span> = <span class="string">"../test_crate"</span></span><br></pre></td></tr></table></figure>
 
-                </div>
+<p>Now we can use our local crate <code>test_crate</code> as folliwing:</p>
+<p><em>main.rs:</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> test_crate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> test_crate::cool;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    test_crate::public_function_in_test_crate();</span><br><span class="line">    test_crate::cool::cool_function();</span><br><span class="line">    cool::cool_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>more details in more detals in <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html" target="_blank" rel="noopener">Cargo book</a> .</p>
+
             </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a>
-        </h1>
-    
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">
-            <time datetime="2019-11-27T10:44:00.000Z" itemprop="datePublished">2019-11-27</time>
+
+    
+<nav id="article-nav">
+    
+    
+        <a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Modules</div>
         </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/closure/" rel="tag">closure</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
     
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
+</nav>
+
+
+
+
+
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a>
-        </h1>
     
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">
-            <time datetime="2019-11-05T07:11:00.000Z" itemprop="datePublished">2019-11-05</time>
-        </a>
-    </div>
 
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Type/" rel="tag">Type</a>
-    </div>
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">
-            <time datetime="2019-11-01T11:35:00.000Z" itemprop="datePublished">2019-11-01</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
 </section>
         </div>
         <footer id="footer">
