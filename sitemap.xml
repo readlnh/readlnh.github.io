@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://readlnh.github.io/2020/09/22/Rust/blog_os%2520notes/notes/</loc>
+    
+    <lastmod>2020-09-22T13:11:19.915Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://readlnh.github.io/2020/06/20/Rust/local_unpublished_crate_in_Rust/</loc>
     
     <lastmod>2020-06-20T12:25:27.084Z</lastmod>
@@ -44,7 +51,7 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/cgroup/</loc>
+    <loc>http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -58,7 +65,7 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/</loc>
+    <loc>http://readlnh.github.io/2020/03/25/Linux/docker/cgroup/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -72,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2019/11/05/Rust/Rust-by-example-notes/Primitives/</loc>
+    <loc>http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/</loc>
+    <loc>http://readlnh.github.io/2019/11/05/Rust/Rust-by-example-notes/Primitives/</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
@@ -107,13 +114,6 @@
   </url>
   
   <url>
-    <loc>http://readlnh.github.io/about/index.html</loc>
-    
-    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://readlnh.github.io/tags/index.html</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
@@ -122,6 +122,13 @@
   
   <url>
     <loc>http://readlnh.github.io/categories/index.html</loc>
+    
+    <lastmod>2020-03-25T07:41:04.469Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/about/index.html</loc>
     
     <lastmod>2020-03-25T07:41:04.469Z</lastmod>
     
