@@ -163,11 +163,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                16
+                17
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                11
+                15
                 <span>tags</span>
             </div>
         </div>
@@ -297,7 +297,7 @@
                         </a>
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
                     </li> 
-                     <li class="file"><a href="/2020/06/20/Rust/local_unpublished_crate_in_Rust/"></a></li>  </ul> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
                     </li> 
                      <li class="file"><a href="/2020/03/25/hello-world/">Hello World</a></li>  </ul> 
     </div>
@@ -371,7 +371,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title"><span>tags</span></h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -380,6 +380,111 @@
 </aside>
             
             <section id="main">
+        <article id="post-Rust/substrate/bond_in_darwinia_and_substrate" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">
+            <time datetime="2020-01-03T09:25:00.000Z" itemprop="datePublished">2020-01-03</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p><p>What does the <code>bond</code> mean? Somehow it can be translated as building up a strong <code>binding</code> relationship with a PoS network. If you want to put your tokens “at stake”, you must <code>bond</code> them first. But what does the bond actually do? What’s the difference between <code>substrate</code> and <code>darwinia-network</code>?</p>
+<h2 id="Account-abstractions-for-bond-–-Stash-and-Controller"><a href="#Account-abstractions-for-bond-–-Stash-and-Controller" class="headerlink" title="Account abstractions for bond – Stash and Controller"></a>Account abstractions for <code>bond</code> – <code>Stash</code> and <code>Controller</code></h2><ul>
+<li><p>Stash Key: The Stash account is meant to hold large amounts of funds. Its private key should be as secure as possible in a cold wallet.</p>
+</li>
+<li><p>Controller Key: The Controller account signals choices on behalf of the Stash account, like payout preferences, but should only hold a minimal amount of funds to pay transaction fees. Its private key should be secure as it can affect validator settings, but will be used somewhat regularly for validator maintenance.</p>
+<p>
+                
+            
+        
+        
+            </div>   
+            <div class="article-more-link">
+                <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
         <article id="post-Rust/substrate/darwinia_eth_backing_notes" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         

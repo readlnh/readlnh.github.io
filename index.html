@@ -163,11 +163,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                16
+                17
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                11
+                15
                 <span>tags</span>
             </div>
         </div>
@@ -297,7 +297,7 @@
                         </a>
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
                     </li> 
-                     <li class="file"><a href="/2020/06/20/Rust/local_unpublished_crate_in_Rust/"></a></li>  </ul> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
                     </li> 
                      <li class="file"><a href="/2020/03/25/hello-world/">Hello World</a></li>  </ul> 
     </div>
@@ -371,7 +371,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title"><span>tags</span></h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -380,6 +380,216 @@
 </aside>
             
             <section id="main">
+        <article id="post-Rust/local_unpublished_crate_in_Rust" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/cargo/" rel="tag">cargo</a>, <a class="tag-link" href="/tags/crate/" rel="tag">crate</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">
+            <time datetime="2020-09-22T13:21:00.000Z" itemprop="datePublished">2020-09-22</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/local_unpublished_crate_in_Rust.md' target="_blank" rel="noopener"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/local_unpublished_crate_in_Rust.md' target="_blank" rel="noopener"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/local_unpublished_crate_in_Rust.md' target="_blank" rel="noopener"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p><p>Cargo is configured to look for dependencies on <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a> by defalut. However I want to use a local crate. Fortunately, cargo supports to use libraries ont only on  <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a>, but also ther registries, <code>git</code> repositories or subdirectories on our local file system.</p>
+<h2 id="create-a-lib"><a href="#create-a-lib" class="headerlink" title="create a lib"></a>create a <code>lib</code></h2><p>Firstly, create a new package:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cargo new test_crate --lib</span><br></pre></td></tr></table></figure>
+
+<p>Here we pass <code>--lib</code> because we’re making a library. Then the cargo generates:</p>
+<p>
+                
+            
+        
+        
+            </div>   
+            <div class="article-more-link">
+                <a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+        <article id="post-Rust/returning_traits_with_dyn" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/dyn/" rel="tag">dyn</a>, <a class="tag-link" href="/tags/trait/" rel="tag">trait</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/09/22/Rust/returning_traits_with_dyn/">
+            <time datetime="2020-09-22T13:21:00.000Z" itemprop="datePublished">2020-09-22</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p><p>Let’s see the following codes:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sheep</span></span> &#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Cow</span></span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Animal</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Animal <span class="keyword">for</span> Sheep &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span> &#123;</span><br><span class="line">        <span class="string">"baaaaaah!"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Animal <span class="keyword">for</span> Cow &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span> &#123;</span><br><span class="line">        <span class="string">"mooooooo!"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">random_animal</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> Animal&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> random_number &lt; <span class="number">0.5</span> &#123;</span><br><span class="line">        <span class="built_in">Box</span>::new(Sheep &#123;&#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">Box</span>::new(Cow &#123;&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">choose_cow</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="keyword">impl</span> Animal &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"choose_cow::The number is &#123;&#125;."</span>, random_number);</span><br><span class="line">    Cow &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> rng = rand::thread_rng();</span><br><span class="line">    <span class="keyword">let</span> random_number = rng.gen();</span><br><span class="line">    <span class="keyword">let</span> animal = random_animal(random_number);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"You've randomly chosen an animal, and it says &#123;&#125;"</span>, animal.noise());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> animal = choose_cow(random_number);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"You've chosen a cow, and it says &#123;&#125;"</span>, animal.noise());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As the codes saying, if we’re returning <strong>a single type</strong> for our functions, we can use <code>impl Trait</code>, just as:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">choose_cow</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="keyword">impl</span> Animal &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"choose_cow::The number is &#123;&#125;."</span>, random_number);</span><br><span class="line">    Cow &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>
+                
+            
+        
+        
+            </div>   
+            <div class="article-more-link">
+                <a href="/2020/09/22/Rust/returning_traits_with_dyn/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
         <article id="post-Rust/blog_os notes/note_01" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -471,61 +681,6 @@
             </div>   
             <div class="article-more-link">
                 <a href="/2020/09/22/Rust/blog_os%20notes/note_01/#more">Read More</a>
-            </div>
-        
-        <footer class="article-footer">
-        </footer>
-    </div>
-</article>
-
-
-
-
-
-
-
-    
-        <article id="post-Rust/local_unpublished_crate_in_Rust" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-        
-            
-                
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                
-                    
-                    <p><h1 id="How-to-use-local-unpublished-crate-in-Rust-by-cargo"><a href="#How-to-use-local-unpublished-crate-in-Rust-by-cargo" class="headerlink" title="How to use local unpublished crate in Rust by cargo"></a>How to use local unpublished crate in Rust by cargo</h1><p>Cargo is configured to look for dependencies on <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a> by defalut. However I want to use a local crate. Fortunately, cargo supports to use libraries ont only on  <a href="https://crates.io/" target="_blank" rel="noopener">crates.io</a>, but also ther registries, <code>git</code> repositories or subdirectories on our local file system.</p>
-<h2 id="create-a-lib"><a href="#create-a-lib" class="headerlink" title="create a lib"></a>create a <code>lib</code></h2><p>Firstly, create a new package:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cargo new test_crate --lib</span><br></pre></td></tr></table></figure>
-
-<p>Here we pass <code>--lib</code> because we’re making a library. Then the cargo generates:</p>
-<p>
-                
-            
-        
-        
-            </div>   
-            <div class="article-more-link">
-                <a href="/2020/06/20/Rust/local_unpublished_crate_in_Rust/#more">Read More</a>
             </div>
         
         <footer class="article-footer">
@@ -1226,111 +1381,6 @@
             </div>   
             <div class="article-more-link">
                 <a href="/2020/03/25/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/#more">Read More</a>
-            </div>
-        
-        <footer class="article-footer">
-        </footer>
-    </div>
-</article>
-
-
-
-
-
-
-
-    
-        <article id="post-Rust/substrate/bond_in_darwinia_and_substrate" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-                    <div class="article-meta">
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
-    </div>
-
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">
-            <time datetime="2020-01-03T09:25:00.000Z" itemprop="datePublished">2020-01-03</time>
-        </a>
-    </div>
-
-
-                        
-                            <i class="fa fa-bar-chart"></i>
-                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
-                        
-                        
-                            <div class="article-meta-button">
-                                <a href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> Source </a>
-                            </div>
-                            <div class="article-meta-button">
-                                <a href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> Edit </a>
-                            </div>
-                            <div class="article-meta-button">
-                                <a href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md' target="_blank" rel="noopener"> History </a>
-                            </div>
-                        
-                    </div>
-                
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a>
-        </h1>
-    
-
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-        
-            
-                
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                
-                    
-                    <p><p>What does the <code>bond</code> mean? Somehow it can be translated as building up a strong <code>binding</code> relationship with a PoS network. If you want to put your tokens “at stake”, you must <code>bond</code> them first. But what does the bond actually do? What’s the difference between <code>substrate</code> and <code>darwinia-network</code>?</p>
-<h2 id="Account-abstractions-for-bond-–-Stash-and-Controller"><a href="#Account-abstractions-for-bond-–-Stash-and-Controller" class="headerlink" title="Account abstractions for bond – Stash and Controller"></a>Account abstractions for <code>bond</code> – <code>Stash</code> and <code>Controller</code></h2><ul>
-<li><p>Stash Key: The Stash account is meant to hold large amounts of funds. Its private key should be as secure as possible in a cold wallet.</p>
-</li>
-<li><p>Controller Key: The Controller account signals choices on behalf of the Stash account, like payout preferences, but should only hold a minimal amount of funds to pay transaction fees. Its private key should be secure as it can affect validator settings, but will be used somewhat regularly for validator maintenance.</p>
-<p>
-                
-            
-        
-        
-            </div>   
-            <div class="article-more-link">
-                <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/#more">Read More</a>
             </div>
         
         <footer class="article-footer">

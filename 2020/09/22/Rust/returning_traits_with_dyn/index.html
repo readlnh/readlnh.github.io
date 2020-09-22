@@ -4,17 +4,21 @@
     <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
     <meta charset="utf-8">
     
-    <title>Tag: Substrate | Hexo</title>
+    <title>Returning Traits with `dyn` | Hexo</title>
     
     
-        <meta name="keywords" content="Hexo" />
+        <meta name="keywords" content="Rust,dyn,trait" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;readlnh.github.io&#x2F;tags&#x2F;Substrate&#x2F;index.html">
+    <meta name="description" content="Let’s see the following codes: 1234567891011121314151617181920212223242526272829303132333435363738394041424344use rand::prelude::*;struct Sheep &amp;#123;&amp;#125;struct Cow &amp;#123;&amp;#125;trait Animal &amp;#123;">
+<meta name="keywords" content="Rust,dyn,trait">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Returning Traits with `dyn`">
+<meta property="og:url" content="http:&#x2F;&#x2F;readlnh.github.io&#x2F;2020&#x2F;09&#x2F;22&#x2F;Rust&#x2F;returning_traits_with_dyn&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Let’s see the following codes: 1234567891011121314151617181920212223242526272829303132333435363738394041424344use rand::prelude::*;struct Sheep &amp;#123;&amp;#125;struct Cow &amp;#123;&amp;#125;trait Animal &amp;#123;">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-09-22T13:22:36.720Z">
 <meta name="twitter:card" content="summary">
     
 
@@ -264,9 +268,9 @@
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/03/25/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
                     </li> 
                     
-                    <li class="directory">
+                    <li class="directory open">
                         <a href="#" data-role="directory">
-                            <i class="fa fa-folder"></i>
+                            <i class="fa fa-folder-open"></i>
                             &nbsp;
                             Rust
                         </a>
@@ -297,7 +301,7 @@
                         </a>
                          <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
                     </li> 
-                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file active"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
                     </li> 
                      <li class="file"><a href="/2020/03/25/hello-world/">Hello World</a></li>  </ul> 
     </div>
@@ -379,122 +383,120 @@
     <div id="toTop" class="fa fa-angle-up"></div>
 </aside>
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#Substrate</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-Rust/returning_traits_with_dyn" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a>
-        </h1>
-    
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a>
+    </div>
 
-                <div class="article-meta">
-                    
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/dyn/" rel="tag">dyn</a>, <a class="tag-link" href="/tags/trait/" rel="tag">trait</a>
+    </div>
+
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">
-            <time datetime="2020-01-03T09:25:00.000Z" itemprop="datePublished">2020-01-03</time>
+        <a href="/2020/09/22/Rust/returning_traits_with_dyn/">
+            <time datetime="2020-09-22T13:21:00.000Z" itemprop="datePublished">2020-09-22</time>
         </a>
     </div>
 
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/returning_traits_with_dyn.md' target="_blank" rel="noopener"> History </a>
+                            </div>
+                        
+                    </div>
+                
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a>
+        <h1 class="article-title" itemprop="name">
+            Returning Traits with `dyn`
         </h1>
     
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">
-            <time datetime="2019-12-20T10:37:00.000Z" itemprop="datePublished">2019-12-20</time>
-        </a>
-    </div>
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <p>Let’s see the following codes:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sheep</span></span> &#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Cow</span></span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">Animal</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Animal <span class="keyword">for</span> Sheep &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span> &#123;</span><br><span class="line">        <span class="string">"baaaaaah!"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Animal <span class="keyword">for</span> Cow &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">noise</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;<span class="symbol">'static</span> <span class="built_in">str</span> &#123;</span><br><span class="line">        <span class="string">"mooooooo!"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">random_animal</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="built_in">Box</span>&lt;<span class="keyword">dyn</span> Animal&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> random_number &lt; <span class="number">0.5</span> &#123;</span><br><span class="line">        <span class="built_in">Box</span>::new(Sheep &#123;&#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">Box</span>::new(Cow &#123;&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">choose_cow</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="keyword">impl</span> Animal &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"choose_cow::The number is &#123;&#125;."</span>, random_number);</span><br><span class="line">    Cow &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> rng = rand::thread_rng();</span><br><span class="line">    <span class="keyword">let</span> random_number = rng.gen();</span><br><span class="line">    <span class="keyword">let</span> animal = random_animal(random_number);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"You've randomly chosen an animal, and it says &#123;&#125;"</span>, animal.noise());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> animal = choose_cow(random_number);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"You've chosen a cow, and it says &#123;&#125;"</span>, animal.noise());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>As the codes saying, if we’re returning <strong>a single type</strong> for our functions, we can use <code>impl Trait</code>, just as:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">choose_cow</span></span>(random_number: <span class="built_in">f64</span>) -&gt; <span class="keyword">impl</span> Animal &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"choose_cow::The number is &#123;&#125;."</span>, random_number);</span><br><span class="line">    Cow &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
-    </div>
+<p>However, if function returns <strong>multiable types</strong>, it doesn’t work. Because the Rust compiler needs to know how much space every functions’s return type requiers. This means the return type of a function must have a statically known size. We can’t write a function that returns <code>Animal</code>, because the different implementions will need different amounts of memory.</p>
+<p>Instead of returning a trait object directly, our functions return a <code>Box</code> which contains some <code>Animal</code>.  A <code>box</code> is just a reference to some memory in the heap. Because a reference has a statically-known size, and the compiler can guarantee it points to a heap-allocated <code>Animal</code>, we can return a trait from our function!</p>
+<p>Rust tries to be as explicit as possible whenever it allocates memory on the heap. So if your function returns a <strong>pointer-to-trait-on-heap</strong> in this way, you need to write the return type with the dyn keyword, e.g. <code>Box&lt;dyn Animal&gt;</code>.</p>
 
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>, <a class="tag-link" href="/tags/darwinia/" rel="tag">darwinia</a>
-    </div>
-
-                </div>
             </div>
-        </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
     
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+<nav id="article-nav">
+    
+        <a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">
-            <time datetime="2019-11-22T04:13:00.000Z" itemprop="datePublished">2019-11-22</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
-    </div>
-
-                </div>
+                    How to use local unpublished crate in Rust by cargo
+                
             </div>
-        </div>
+        </a>
     
-</div>
+    
+        <a href="/2020/09/22/Rust/blog_os%20notes/note_01/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">笔记1-独立的Rust应用</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
 </section>
         </div>
         <footer id="footer">
