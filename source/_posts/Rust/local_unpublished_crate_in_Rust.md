@@ -1,4 +1,12 @@
-# How to use local unpublished crate in Rust by cargo
+---
+title: How to use local unpublished crate in Rust by cargo
+date: 2020-9-22 21:21
+tags: 
+    - Rust
+    - cargo
+    - crate
+---
+
 Cargo is configured to look for dependencies on [crates.io](https://crates.io/) by defalut. However I want to use a local crate. Fortunately, cargo supports to use libraries ont only on  [crates.io](https://crates.io/), but also ther registries, `git` repositories or subdirectories on our local file system.
 
 ## create a `lib`
