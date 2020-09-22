@@ -1,12 +1,10 @@
 ---
-title: `ref` in Rust
+title: ref in Rust
 date: 2020-9-22 21:21
 tags: 
     - Rust
     - ref
 ---
-
-
 
 When doing pattern matching or destructuring via `let` binding, the `ref` keyword can be used to take references to the field of a struct/tuple.
 
