@@ -93,5 +93,5 @@ sitemap:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/readlnh/readlnh.github.io.git
+  repo: git@github.com:readlnh/readlnh.github.io.git
   branch: master
