@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>Bonding in darwinia and substrate | Hexo</title>
+    
+    
+        <meta name="keywords" content="Rust,Substrate,blcokchain" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="What does the bond mean? Somehow it can be translated as building up a strong binding relationship with a PoS network. If you want to put your tokens “at stake”, you must bond them first. But what doe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bonding in darwinia and substrate">
+<meta property="og:url" content="http://readlnh.github.io/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="What does the bond mean? Somehow it can be translated as building up a strong binding relationship with a PoS network. If you want to put your tokens “at stake”, you must bond them first. But what doe">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-03T16:25:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Substrate">
+<meta property="article:tag" content="blcokchain">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file active"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Rust/substrate/bond_in_darwinia_and_substrate" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">
+            <time datetime="2020-01-03T16:25:00.000Z" itemprop="datePublished">2020-01-03</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/substrate/bond_in_darwinia_and_substrate.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Bonding in darwinia and substrate
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <p>What does the <code>bond</code> mean? Somehow it can be translated as building up a strong <code>binding</code> relationship with a PoS network. If you want to put your tokens “at stake”, you must <code>bond</code> them first. But what does the bond actually do? What’s the difference between <code>substrate</code> and <code>darwinia-network</code>?</p>
+<h2 id="Account-abstractions-for-bond-–-Stash-and-Controller"><a href="#Account-abstractions-for-bond-–-Stash-and-Controller" class="headerlink" title="Account abstractions for bond – Stash and Controller"></a>Account abstractions for <code>bond</code> – <code>Stash</code> and <code>Controller</code></h2><ul>
+<li><p>Stash Key: The Stash account is meant to hold large amounts of funds. Its private key should be as secure as possible in a cold wallet.</p>
+</li>
+<li><p>Controller Key: The Controller account signals choices on behalf of the Stash account, like payout preferences, but should only hold a minimal amount of funds to pay transaction fees. Its private key should be secure as it can affect validator settings, but will be used somewhat regularly for validator maintenance.</p>
+</li>
+</ul>
+<h2 id="Bond-in-Substrate"><a href="#Bond-in-Substrate" class="headerlink" title="Bond in Substrate"></a>Bond in Substrate</h2><p>Let’s have a look at the following codes:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">bond</span>(origin,</span><br><span class="line">			controller: &lt;T::Lookup <span class="keyword">as</span> StaticLookup&gt;::Source,</span><br><span class="line">			<span class="meta">#[compact]</span> value: BalanceOf&lt;T&gt;,</span><br><span class="line">			payee: RewardDestination</span><br><span class="line">		) &#123;</span><br><span class="line">			<span class="keyword">let</span> <span class="variable">stash</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> &lt;Bonded&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(&amp;stash) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="title function_ invoke__">Err</span>(<span class="string">&quot;stash already bonded&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> <span class="variable">controller</span> = T::Lookup::<span class="title function_ invoke__">lookup</span>(controller)?;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> &lt;Ledger&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(&amp;controller) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="title function_ invoke__">Err</span>(<span class="string">&quot;controller already paired&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// reject a bond which is considered to be _dust_.</span></span><br><span class="line">			<span class="keyword">if</span> value &lt; T::Currency::<span class="title function_ invoke__">minimum_balance</span>() &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="title function_ invoke__">Err</span>(<span class="string">&quot;can not bond with value less than minimum balance&quot;</span>)</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// You&#x27;re auto-bonded forever, here. We might improve this by only bonding when</span></span><br><span class="line">			<span class="comment">// you actually validate/nominate and remove once you unbond __everything__.</span></span><br><span class="line">			&lt;Bonded&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;stash, &amp;controller);</span><br><span class="line">			&lt;Payee&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;stash, payee);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> <span class="variable">stash_balance</span> = T::Currency::<span class="title function_ invoke__">free_balance</span>(&amp;stash);</span><br><span class="line">			<span class="keyword">let</span> <span class="variable">value</span> = value.<span class="title function_ invoke__">min</span>(stash_balance);</span><br><span class="line">			<span class="keyword">let</span> <span class="variable">item</span> = StakingLedger &#123; stash, total: value, active: value, unlocking: <span class="built_in">vec!</span>[] &#125;;</span><br><span class="line">			<span class="keyword">Self</span>::<span class="title function_ invoke__">update_ledger</span>(&amp;controller, &amp;item);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It’s really simple. Take the origin account as a stash and lock up <code>value</code> of its balance. <code>controller</code> will be the account that controls it. <code>value</code> must be more than the <code>minimum_balance</code> specified by <code>T::Currency</code>. The dispatch origin for this call must be <em>Signed</em> by the stash account.</p>
+<p>As we all know, “Verify First, Write Last” should be obeyed on Substrate, so verify wheather stash has been bonded and wheather controller has been paired already First. Make sure the <code>value</code> is bigger than the <code>minimum_balance</code> or the account would be a <em>dust</em> account that should be cleaned. </p>
+<p>Then bond the <code>stash</code> and the <code>controller</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Bonded&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;stash, &amp;controller);</span><br></pre></td></tr></table></figure>
+
+<p>Set the Reward Destination:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Payee&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;stash, payee);</span><br></pre></td></tr></table></figure>
+
+<p>Fianlly update the ledger.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">stash_balance</span> = T::Currency::<span class="title function_ invoke__">free_balance</span>(&amp;stash);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">value</span> = value.<span class="title function_ invoke__">min</span>(stash_balance);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">item</span> = StakingLedger &#123; stash, total: value, active: value, unlocking: <span class="built_in">vec!</span>[] &#125;;</span><br><span class="line"><span class="keyword">Self</span>::<span class="title function_ invoke__">update_ledger</span>(&amp;controller, &amp;item);</span><br></pre></td></tr></table></figure>
+
+<p>Note if <code>value</code> is larger than <code>stash_balance</code>, the bond should not faill and will bond all the balances in the stash account to the controller.</p>
+<p><code>bond</code> doesn’t mean transfer tokens to the <code>controller</code> account. The tokens are still at the <code>stash</code> account. Howerever, the Staking Ledger’s active item will become the minium between the <code>value</code> and the <code>stash_balance</code>.</p>
+<h2 id="Bond-in-Darwinia"><a href="#Bond-in-Darwinia" class="headerlink" title="Bond in Darwinia"></a>Bond in Darwinia</h2><p>The <code>bond</code> operation in darwinia-network is almost the same as the <code>bond</code> operation in substrate. However, there are also something different between them. As darwinia has two tokens – <code>ring</code> and <code>kton</code>, the <code>bond</code> operation should be able to handle both tokens.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">match</span> value &#123;</span><br><span class="line">	StakingBalances::<span class="title function_ invoke__">RingBalance</span>(r) =&gt; &#123;</span><br><span class="line">		<span class="keyword">let</span> <span class="variable">stash_balance</span> = T::Ring::<span class="title function_ invoke__">free_balance</span>(&amp;stash);</span><br><span class="line">		<span class="keyword">let</span> <span class="variable">value</span> = r.<span class="title function_ invoke__">min</span>(stash_balance);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">Self</span>::<span class="title function_ invoke__">bond_helper_in_ring</span>(&amp;stash, &amp;controller, value, promise_month, ledger);</span><br><span class="line"></span><br><span class="line">		&lt;RingPool&lt;T&gt;&gt;::<span class="title function_ invoke__">mutate</span>(|r| *r += value);</span><br><span class="line">		&lt;Module&lt;T&gt;&gt;::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">Bond</span>(</span><br><span class="line">			StakingBalances::<span class="title function_ invoke__">RingBalance</span>(value.<span class="title function_ invoke__">saturated_into</span>()),</span><br><span class="line">			now,</span><br><span class="line">			promise_month,</span><br><span class="line">		));</span><br><span class="line">	&#125;,</span><br><span class="line">	StakingBalances::<span class="title function_ invoke__">KtonBalance</span>(k) =&gt; &#123;</span><br><span class="line">		<span class="keyword">let</span> <span class="variable">stash_balance</span> = T::Kton::<span class="title function_ invoke__">free_balance</span>(&amp;stash);</span><br><span class="line">		<span class="keyword">let</span> <span class="variable">value</span> = k.<span class="title function_ invoke__">min</span>(stash_balance);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">Self</span>::<span class="title function_ invoke__">bond_helper_in_kton</span>(&amp;controller, value, ledger);</span><br><span class="line"></span><br><span class="line">		&lt;KtonPool&lt;T&gt;&gt;::<span class="title function_ invoke__">mutate</span>(|k| *k += value);</span><br><span class="line">		&lt;Module&lt;T&gt;&gt;::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">Bond</span>(</span><br><span class="line">			StakingBalances::<span class="title function_ invoke__">KtonBalance</span>(value.<span class="title function_ invoke__">saturated_into</span>()),</span><br><span class="line">			now,</span><br><span class="line">			promise_month,</span><br><span class="line">		));</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>There are also a special rule in darwinia-network: Users can choose to lock RING for 3-36 months in the process of Staking, and the system will offer a KTON token as reward for users participating in Staking. So we need <code>bond_helper_in_ring</code> and <code>bond_helper_in_kton</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">bond_helper_in_ring</span>(</span><br><span class="line">		stash: &amp;T::AccountId,</span><br><span class="line">		controller: &amp;T::AccountId,</span><br><span class="line">		value: RingBalance&lt;T&gt;,</span><br><span class="line">		promise_month: Moment,</span><br><span class="line">		<span class="keyword">mut</span> ledger: StakingLedger&lt;T::AccountId, RingBalance&lt;T&gt;, KtonBalance&lt;T&gt;, T::Moment&gt;,</span><br><span class="line">	) &#123;</span><br><span class="line">		<span class="comment">// if stash promise to a extra-lock</span></span><br><span class="line">		<span class="comment">// there will be extra reward, kton, which</span></span><br><span class="line">		<span class="comment">// can also be use to stake.</span></span><br><span class="line">		<span class="keyword">if</span> promise_month &gt;= <span class="number">3</span> &#123;</span><br><span class="line">			ledger.active_deposit_ring += value;</span><br><span class="line">			<span class="comment">// for now, kton_return is free</span></span><br><span class="line">			<span class="comment">// mint kton</span></span><br><span class="line">			<span class="keyword">let</span> <span class="variable">kton_return</span> = inflation::compute_kton_return::&lt;T&gt;(value, promise_month);</span><br><span class="line">			<span class="keyword">let</span> <span class="variable">kton_positive_imbalance</span> = T::Kton::<span class="title function_ invoke__">deposit_creating</span>(&amp;stash, kton_return);</span><br><span class="line">			T::KtonReward::<span class="title function_ invoke__">on_unbalanced</span>(kton_positive_imbalance);</span><br><span class="line">			<span class="keyword">let</span> <span class="variable">now</span> = &lt;timestamp::Module&lt;T&gt;&gt;::<span class="title function_ invoke__">now</span>();</span><br><span class="line">			ledger.deposit_items.<span class="title function_ invoke__">push</span>(TimeDepositItem &#123;</span><br><span class="line">				value,</span><br><span class="line">				start_time: now,</span><br><span class="line">				expire_time: now + T::Moment::<span class="title function_ invoke__">saturated_from</span>((promise_month * MONTH_IN_MILLISECONDS).<span class="title function_ invoke__">into</span>()),</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">		ledger.active_ring = ledger.active_ring.<span class="title function_ invoke__">saturating_add</span>(value);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">Self</span>::<span class="title function_ invoke__">update_ledger</span>(&amp;controller, &amp;<span class="keyword">mut</span> ledger, StakingBalances::<span class="title function_ invoke__">RingBalance</span>(value));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>As the code shows, <code>bond_helper_in_ring</code> computes the <code>kton</code> should return and update the ledger. </p>
+<p><code>bond_helper_in_kton</code> is simper, it just updates the ledger.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">bond_helper_in_kton</span>(</span><br><span class="line">		controller: &amp;T::AccountId,</span><br><span class="line">		value: KtonBalance&lt;T&gt;,</span><br><span class="line">		<span class="keyword">mut</span> ledger: StakingLedger&lt;T::AccountId, RingBalance&lt;T&gt;, KtonBalance&lt;T&gt;, T::Moment&gt;,</span><br><span class="line">	) &#123;</span><br><span class="line">		ledger.active_kton += value;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">Self</span>::<span class="title function_ invoke__">update_ledger</span>(&amp;controller, &amp;<span class="keyword">mut</span> ledger, StakingBalances::<span class="title function_ invoke__">KtonBalance</span>(value));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Modules
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Darwinia Eth-Backing</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

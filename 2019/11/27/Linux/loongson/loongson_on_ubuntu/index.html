@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04 | Hexo</title>
+    
+    
+        <meta name="keywords" content="loognson,mipsel,cross-compile" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="This article is about setting up an environment for enbedded Linux application development for loongson. The resulting environment enables cross-platform application development for Loongson mipsel-ba">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04">
+<meta property="og:url" content="http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="This article is about setting up an environment for enbedded Linux application development for loongson. The resulting environment enables cross-platform application development for Loongson mipsel-ba">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-27T14:48:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="loognson">
+<meta property="article:tag" content="mipsel">
+<meta property="article:tag" content="cross-compile">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Linux/loongson/loongson_on_ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Linux/">Linux</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Linux/loongson/">loongson</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/cross-compile/" rel="tag">cross-compile</a>, <a class="tag-link-link" href="/tags/loognson/" rel="tag">loognson</a>, <a class="tag-link-link" href="/tags/mipsel/" rel="tag">mipsel</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">
+            <time datetime="2019-11-27T14:48:00.000Z" itemprop="datePublished">2019-11-27</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Linux/loongson/loongson_on_ubuntu.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Linux/loongson/loongson_on_ubuntu.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Linux/loongson/loongson_on_ubuntu.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <p>This article is about setting up an environment for enbedded Linux application development for loongson. The resulting environment enables cross-platform application development for Loongson mipsel-based SOMs&#x2F;COMs using Ubuntu18.04 for application development.</p>
+<h2 id="Communicate-with-loongson-development-board-using-USB-cable"><a href="#Communicate-with-loongson-development-board-using-USB-cable" class="headerlink" title="Communicate with loongson development board using USB cable"></a>Communicate with loongson development board using USB cable</h2><p>The first thing we need to do is communicating with hardware using USB cable.The boards are equipped with PL2303-based device. To be able to talk to an application, our machine must have appropriate PL2303 drivers. Fortunately, Ubuntu18.04 is default equipped with the PL2030 drivers(we could use <code>lsmod | grep pl2303</code> to check it). The only thing necessary is to check whether the Ubuntu machine can communicate over USB with the attached loongson development board.</p>
+<p>To do this:</p>
+<ul>
+<li>Connect the PC via an USB cable to the USB UART port of the loongson development board.</li>
+<li>Turn the board on.</li>
+</ul>
+<p>Note the correspondence between the colored cable and thier pinout:</p>
+<ul>
+<li>Black wire(GND)</li>
+<li>Green wire(RX)</li>
+<li>White wire(TX)</li>
+</ul>
+<p>Use <code>lsusb</code> command to list the usb devices connected to our machine. The output text of this command in terminal is something like this:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Bus 001 Device 007: ID 0bda:0129 Realtek Semiconductor Corp. RTS5129 Card Reader Controller</span><br><span class="line">Bus 001 Device 008: ID 0cf3:0036 Atheros Communications, Inc. </span><br><span class="line">Bus 001 Device 005: ID 0c45:6a04 Microdia </span><br><span class="line">Bus 001 Device 004: ID 17ef:6050 Lenovo </span><br><span class="line">Bus 001 Device 010: ID 046d:c326 Logitech, Inc. </span><br><span class="line">Bus 001 Device 011: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port</span><br><span class="line">Bus 001 Device 002: ID 8087:8000 Intel Corp. </span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
+
+<p>This shows that the PL2303 devices on the development board has been detected and that the drivers on the PC are running. To find out what RS232(UART) port is used by the USB driver, type:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dmesg | grep -ie PL2303</span><br></pre></td></tr></table></figure>
+
+<p>The return message:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ 8907.910272] usbcore: registered new interface driver pl2303</span><br><span class="line">[ 8907.910924] usbserial: USB Serial support registered <span class="keyword">for</span> pl2303</span><br><span class="line">[ 8907.911054] pl2303 1-1.1:1.0: pl2303 converter detected</span><br><span class="line">[ 8907.913355] usb 1-1.1: pl2303 converter now attached to ttyUSB0</span><br></pre></td></tr></table></figure>
+
+<p>The message tells us where the driver connects to a TTY port, in this case, <code>usb 1-1.1: pl2303 converter now attached to ttyUSB0</code>.</p>
+<h3 id="picocom"><a href="#picocom" class="headerlink" title="picocom"></a>picocom</h3><p>Picocom is a minimal dumb-terminal emulation program that is great for accessing a serial port based Linux console; which is typical done when developing an embedded Linux based product. </p>
+<p>Install picocom with this command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install picocom</span><br></pre></td></tr></table></figure>
+
+<p>Now, we know the serial port, set the speed to 115200 baud.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo picocom -b 115200 /dev/ttyUSB0</span><br></pre></td></tr></table></figure>
+
+<p>Now, we can communicate with the board.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">picocom v2.2</span><br><span class="line"></span><br><span class="line">port is        : /dev/ttyUSB0</span><br><span class="line">flowcontrol    : none</span><br><span class="line">baudrate is    : 115200</span><br><span class="line">parity is      : none</span><br><span class="line">databits are   : 8</span><br><span class="line">stopbits are   : 1</span><br><span class="line">escape is      : C-a</span><br><span class="line"><span class="built_in">local</span> <span class="built_in">echo</span> is  : no</span><br><span class="line">noinit is      : no</span><br><span class="line">noreset is     : no</span><br><span class="line">nolock is      : no</span><br><span class="line">send_cmd is    : sz -vv</span><br><span class="line">receive_cmd is : rz -vv -E</span><br><span class="line">imap is        : </span><br><span class="line">omap is        : </span><br><span class="line">emap is        : crcrlf,delbs,</span><br><span class="line"></span><br><span class="line">Type [C-a] [C-h] to see available commands</span><br><span class="line"></span><br><span class="line">Terminal ready</span><br><span class="line"></span><br><span class="line">[root@Loongson:/]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Cross-Compile"><a href="#Cross-Compile" class="headerlink" title="Cross Compile"></a>Cross Compile</h2><p>Now we should install the cross tool chain. I download the <code>mips-loongson-gcc4.9-2019.08-05.linux-gnu.tar.gz</code> from the loongson website. Unpack the <em>tar.xz</em> file and move it to the <code>/opt</code>. Export the environment variables by adding the following lines into the <code>~/.bashrc</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/opt/gcc-4.3-ls232/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;home/readlnh/Application/mipsel-linux-musl-cross/bin:<span class="variable">$PATH</span>&quot;</span> </span><br></pre></td></tr></table></figure>
+
+<p>Don’t forget to run command <code>source ~/.bashrc</code>.</p>
+<p>Now, we could compile <code>a.c</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mipsel-linux-gnu-gcc a.c</span><br></pre></td></tr></table></figure>
+
+<h2 id="tftp-server"><a href="#tftp-server" class="headerlink" title="tftp server"></a>tftp server</h2><p>On ubuntu, run <code> sudo apt-get install tftpd-hpa tftp-hpa</code>. Then edit the <code>/etc/default/tftpd-hap</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/default/tftpd-hpa                                                     </span></span><br><span class="line">  TFTP_USERNAME=<span class="string">&quot;tftp&quot;</span></span><br><span class="line">  TFTP_DIRECTORY=<span class="string">&quot;/home/readlnh/tftpboot&quot;</span></span><br><span class="line">  TFTP_ADDRESS=<span class="string">&quot;0.0.0.0:69&quot;</span></span><br><span class="line">  TFTP_OPTIONS=<span class="string">&quot;-l -c -s&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Create file <code>/etc/xinetd.d/tftp</code> with the following contents:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">service tftp</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">disable</span> = no</span><br><span class="line">	socket_type = dgram</span><br><span class="line">	protocol = udp</span><br><span class="line">	<span class="built_in">wait</span> = <span class="built_in">yes</span></span><br><span class="line">	user = root</span><br><span class="line">	server = /usr/sbin/in.tftpd</span><br><span class="line">	server_args = -s /home/readlnh/tftpboot -c</span><br><span class="line">	per_source = 11</span><br><span class="line">	cps = 100 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Create directory <code>/home/readlnh/tftpboot</code> and set its permissions:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="built_in">mkdir</span> /home/readlnh/tftpboot</span><br><span class="line">$ sudo <span class="built_in">chmod</span> -R 777 /home/readlnh/tftpboot</span><br><span class="line">$ sudo <span class="built_in">chown</span> -R nobody /home/readlnh/tftpboot</span><br></pre></td></tr></table></figure>
+
+<p>Restart the <code>xinetd</code> service:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service xinetd restart</span><br></pre></td></tr></table></figure>
+
+<p>We could use <code>ifconfig</code> to get the ip address of our host machine. Make sure that ethernet cable is plugged into the board and a dhcp server is running in either your host machine or your router. In this case, my host machine’s ip address is <code>192.168.1.230</code>. Run <code>ifconfig</code> to set the ip address of the board to make sure the address fall into the same subnet, here I set it <code>192.168.1.108</code>. </p>
+<p>Now, we could <code>ping</code> our host machine by <code>ping 192.168.1.230</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PING 192.168.1.230 (192.168.1.230): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=0 ttl=64 time=5.054 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=1 ttl=64 time=4.140 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=2 ttl=64 time=0.843 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=3 ttl=64 time=3.813 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=4 ttl=64 time=3.727 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=5 ttl=64 time=0.562 ms</span><br><span class="line">64 bytes from 192.168.1.230: <span class="built_in">seq</span>=6 ttl=64 time=3.749 ms</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Download the <code>a.out</code> we compiled before by <code>tftp -r a.out -g 192.168.1.230</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.out                100% |*******************************|  7796   0:00:00 ETA</span><br></pre></td></tr></table></figure>
+
+<p>Run the <code>a.out</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Loongson:/]<span class="comment">#chmod u+x a.out </span></span><br><span class="line">[root@Loongson:/]<span class="comment">#./a.out</span></span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<h2 id="Hints"><a href="#Hints" class="headerlink" title="Hints"></a>Hints</h2><p>Loongson only provide <code>gcc4.9</code> for LSC1C0300B, howerver, the <code>mipsel-linux-gnu-gcc</code> in Ubuntu apt source also works well.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://elinux.org/Communicate_with_hardware_using_USB_cable_for_Ubuntu">Communicate with hardware using USB cable for Ubuntu</a> </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://rechtzeit.wordpress.com/2013/01/16/tftp-boot-using-u-boot/">TFTP Boot using u-boot</a></p>
+</li>
+</ul>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Closure
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Substrate-workshop notes</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

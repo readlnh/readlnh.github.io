@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>笔记1-独立的Rust应用 | Hexo</title>
+    
+    
+        <meta name="keywords" content="Rust,os" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="第一步，先通过cargo创建一个新项目： 1cargo new rtoyos 项目结构如下： 123├── Cargo.toml├── src│   ├── main.rs 但是Rust项目默认都会链接到std标准库，而标准库会用到很多操作系统的功能，诸如线程，文件，网络等。所以我们要做的第一步就是实现一个不依赖于任何操作系统功能的Rust程序（裸机程序）。 禁用标准库我们可以通过![no_std">
+<meta property="og:type" content="article">
+<meta property="og:title" content="笔记1-独立的Rust应用">
+<meta property="og:url" content="http://readlnh.github.io/2020/09/22/Rust/blog_os%20notes/note_01/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一步，先通过cargo创建一个新项目： 1cargo new rtoyos 项目结构如下： 123├── Cargo.toml├── src│   ├── main.rs 但是Rust项目默认都会链接到std标准库，而标准库会用到很多操作系统的功能，诸如线程，文件，网络等。所以我们要做的第一步就是实现一个不依赖于任何操作系统功能的Rust程序（裸机程序）。 禁用标准库我们可以通过![no_std">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-22T19:11:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="os">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Rust/blog_os notes/note_01" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/blog-os-notes/">blog_os notes</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link-link" href="/tags/os/" rel="tag">os</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/09/22/Rust/blog_os%20notes/note_01/">
+            <time datetime="2020-09-22T19:11:00.000Z" itemprop="datePublished">2020-09-22</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/blog_os notes/note_01.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/blog_os notes/note_01.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/blog_os notes/note_01.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            笔记1-独立的Rust应用
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <p>第一步，先通过cargo创建一个新项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo new rtoyos</span><br></pre></td></tr></table></figure>
+<p>项目结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── Cargo.toml</span><br><span class="line">├── src</span><br><span class="line">│   ├── main.rs</span><br></pre></td></tr></table></figure>
+<p>但是Rust项目默认都会链接到<code>std</code>标准库，而标准库会用到很多操作系统的功能，诸如线程，文件，网络等。所以我们要做的第一步就是实现一个不依赖于任何操作系统功能的Rust程序（裸机程序）。</p>
+<h2 id="禁用标准库"><a href="#禁用标准库" class="headerlink" title="禁用标准库"></a>禁用标准库</h2><p>我们可以通过<code>![no_std]</code>来禁用<code>std</code>库。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#![no_std]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行<code>cargo build</code>，可以看到如下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">error: cannot find macro `println` in this scope</span><br><span class="line"> --&gt; src/main.rs:4:5</span><br><span class="line">  |</span><br><span class="line">4 |     println!(&quot;Hello, world!&quot;);</span><br><span class="line">  |     ^^^^^^^</span><br><span class="line"></span><br><span class="line">error: `#[panic_handler]` function required, but not found</span><br><span class="line"></span><br><span class="line">error: language item required, but not found: `eh_personality`</span><br><span class="line"></span><br><span class="line">error: aborting due to 3 previous errors</span><br></pre></td></tr></table></figure>
+
+<h3 id="println-宏"><a href="#println-宏" class="headerlink" title="println! 宏"></a>println! 宏</h3><p><code>println!</code>宏依赖于<code>std</code>库，这里我们就先不使用它了。</p>
+<h3 id="panic-处理函数"><a href="#panic-处理函数" class="headerlink" title="panic 处理函数"></a>panic 处理函数</h3><p>第二个错误说需要一个<code>#[panic_handler]</code>函数，这个函数会在程序<code>panic</code>的时候被调用。默认情况下，<code>std</code>中有<code>panic</code>的实现，然而由于我们是在<code>[no_std]</code>环境中，只能自己实现一个<code>panic</code>函数了。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> core::panic::PanicInfo;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[panic_handler]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">panic</span>(_info: &amp;PanicInfo) <span class="punctuation">-&gt;</span> ! &#123;</span><br><span class="line">    <span class="keyword">loop</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们用了<code>core</code>库，这个库不需要操作系统支持。<code>PanicInfo</code>类型的参数会包含<code>panic</code>发生的文件，代码行数等错误信息。另外<code>!</code>标记表示这个函数的返回类型为<code>never type</code>，即永远不会返回。</p>
+<h3 id="eh-personality-语义项"><a href="#eh-personality-语义项" class="headerlink" title="eh_personality 语义项"></a><code>eh_personality</code> 语义项</h3><p>语义项是编译器内部所需的特殊函数或类型，例如<code>Copy</code> trait（<code>#[lang = &quot;copy&quot;]</code>），又或是之前的<code>panic_handler</code>。<code>eh_personality</code>是用来标记函数实现堆栈展开的语义项，该语义与<code>panic</code>有关。</p>
+<blockquote>
+<p>堆栈展开 (Stack Unwinding) </p>
+<p>通常当程序出现了异常时，从异常点开始会沿着 caller 调用栈一层一层回溯，直到找到某个函数能够捕获这个异常或终止程序。这个过程称为堆栈展开。</p>
+<p>当程序出现异常时，我们需要沿着调用栈一层层回溯上去回收每个 caller 中定义的局部变量（这里的回收包括 C++ 的 RAII 的析构以及 Rust 的 drop 等）避免造成捕获异常并恢复后的内存溢出。</p>
+<p>而在 Rust 中，panic 证明程序出现了错误，我们则会对于每个 caller 函数调用依次这个被标记为堆栈展开处理函数的函数进行清理。</p>
+<p>这个处理函数是一个依赖于操作系统的复杂过程，在标准库中实现。但是我们禁用了标准库使得编译器找不到该过程的实现函数了。</p>
+</blockquote>
+<p>为了简单起见，我们将堆栈展开禁用，在<code>panic</code>发生时直接<code>abort</code>而不是依次获取堆栈信息。</p>
+<p>在<code>Cargo.toml</code>中进行配置：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[profile.dev]</span></span><br><span class="line"><span class="attr">panic</span> = <span class="string">&quot;abort&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[profile.release]</span></span><br><span class="line"><span class="attr">panic</span> = <span class="string">&quot;abort&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在,错误信息变成了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: requires `start` lang_item</span><br></pre></td></tr></table></figure>
+
+<h2 id="移除C运行时依赖"><a href="#移除C运行时依赖" class="headerlink" title="移除C运行时依赖"></a>移除C运行时依赖</h2><p>大部分语言都有一个运行时（Runtime），这个运行时会在<code>main</code>函数之前被调用。以<code>Rust</code>为例，一个典型的链接了标准库的Rust程序会先跳转到C语言运行时环境<code>crt0</code>（C runtime zero），<code>crt0</code>会接着跳转到Rust运行时的入口点，这个入口点是被<code>start</code>语义所标记的。最后，Rust的运行时会调用<code>main</code>函数。</p>
+<p>由于我们的程序无法访问标准库也就无法访问<code>crt0</code>和Rust运行时，所以我们需要定义我们自己的入口点。这里即使覆写<code>start</code>语义也是没用的，因为它仍然需要<code>crt0</code>的支持，所以我们要做的是直接覆写整个<code>ctr0</code>入口点。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#![no_std]</span></span><br><span class="line"><span class="meta">#![no_main]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> core::panic::PanicInfo;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[panic_handler]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">panic</span>(_info: &amp;PanicInfo) <span class="punctuation">-&gt;</span> ! &#123;</span><br><span class="line">    <span class="keyword">loop</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#[no_mangle]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="keyword">fn</span> <span class="title function_">_start</span>() <span class="punctuation">-&gt;</span> ! &#123;</span><br><span class="line">    <span class="keyword">loop</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们使用<code>#![no_main]</code>属性来告诉编译器我们不使用常规入口点，并使用<code>_start</code>函数作为新的入口点（<code>_start</code>是大部分系统的默认入口点）。这里我们使用<code>#[no_mangle]</code>标记来禁用编译时的重命名，保证编译器生成的函数名仍然为<code>_start</code>，并使用<code>extern &quot;C&quot;</code>表示这是一个C语言函数。</p>
+<p>此时我们再编译，发现错误变成了链接错误。</p>
+<h2 id="解决链接错误"><a href="#解决链接错误" class="headerlink" title="解决链接错误"></a>解决链接错误</h2><p>链接器（Linker）是一个程序，它将生成的目标文件组合为一个可执行文件。不同的操作系统如 Windows、macOS 或 Linux，规定了不同的可执行文件格式，因此也各有自己的链接器，抛出不同的错误；但这些错误的根本原因还是相同的：链接器的默认配置假定程序依赖于 C 语言的运行时环境，但我们的程序并不依赖于它。以x86-64-linux为例，错误如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">error: linking with `cc` failed: <span class="built_in">exit</span> code: 1</span><br><span class="line">  |</span><br><span class="line">  = note: <span class="string">&quot;cc&quot;</span> <span class="string">&quot;-Wl,--as-needed&quot;</span> <span class="string">&quot;-Wl,-z,noexecstack&quot;</span> <span class="string">&quot;-m64&quot;</span> </span><br><span class="line">  ...</span><br><span class="line">          collect2: error: ld returned 1 <span class="built_in">exit</span> status</span><br></pre></td></tr></table></figure>
+
+<p>我们只需要使用<code>-C link-arg</code>flag（<code>cargo rustc -- -C link-arg=-nostartfiles</code>）或是干脆选择编译为裸机目标（例如：<code>cargo build --target thumbv7em-none-eabihf</code>）即可。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2020/09/22/Rust/returning_traits_with_dyn/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Returning Traits with `dyn`
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Modules</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

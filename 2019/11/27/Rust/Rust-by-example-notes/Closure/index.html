@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>Closure | Hexo</title>
+    
+    
+        <meta name="keywords" content="Rust,closure" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="About closureClosure in Rust, also called lamba expressions or lambdas, are functions that can capture the enclosing environment. Some characterisitics of closures include:  using || instead of () aro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Closure">
+<meta property="og:url" content="http://readlnh.github.io/2019/11/27/Rust/Rust-by-example-notes/Closure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="About closureClosure in Rust, also called lamba expressions or lambdas, are functions that can capture the enclosing environment. Some characterisitics of closures include:  using || instead of () aro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-27T17:44:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="closure">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file active"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Rust/Rust-by-example-notes/Closure" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link-link" href="/tags/closure/" rel="tag">closure</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">
+            <time datetime="2019-11-27T17:44:00.000Z" itemprop="datePublished">2019-11-27</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/Rust-by-example-notes/Closure.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/Rust-by-example-notes/Closure.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/Rust-by-example-notes/Closure.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Closure
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <h2 id="About-closure"><a href="#About-closure" class="headerlink" title="About closure"></a>About closure</h2><p>Closure in Rust, also called lamba expressions or lambdas, are functions that can capture the enclosing environment.</p>
+<p>Some characterisitics of closures include:</p>
+<ul>
+<li>using <code>||</code> instead of <code>()</code> around input variables.</li>
+<li>optional body delimination <code>&#123;&#125;</code> for a single expression (mandatory otherwise).</li>
+<li>the ability to capture the outer environment variables</li>
+</ul>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">closure_annotated</span> = |i: <span class="type">i32</span>| <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123; i + <span class="number">1</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">closure_inferred</span> = |i| i + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">closure_annotated</span>(<span class="number">1</span>));</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">closure_inferred</span>(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = || &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Hi xxxx&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title function_ invoke__">x</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Capturing"><a href="#Capturing" class="headerlink" title="Capturing"></a>Capturing</h3><p>Capturing can flexibly adapt to the use case, sometimes moving and sometimes borrowing. Closures can capture variables:</p>
+<ul>
+<li>by reference: <code>&amp;T</code></li>
+<li>by mutable reference: <code>&amp;mut T</code></li>
+<li>by value: <code>T</code></li>
+</ul>
+<p>Closures preferentially capture variables by reference and only go lower when required.</p>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">use</span> std::mem;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &amp;T</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">color</span> = <span class="string">&quot;red&quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">print</span> = || <span class="built_in">println!</span>(<span class="string">&quot;color is &#123;&#125;&quot;</span>, color);</span><br><span class="line">    <span class="title function_ invoke__">print</span>();</span><br><span class="line">    <span class="title function_ invoke__">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &amp;mut T</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">count</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">inc</span> = || &#123;</span><br><span class="line">        count += <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;count is &#123;&#125;&quot;</span>, count);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title function_ invoke__">inc</span>();</span><br><span class="line">    <span class="title function_ invoke__">inc</span>();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;count: &#123;&#125;&quot;</span>, count);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// A non-copy type</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">movable</span> = <span class="type">Box</span>::<span class="title function_ invoke__">new</span>(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">consume</span> = || &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;movable: &#123;:?&#125;&quot;</span>, movable);</span><br><span class="line">        mem::<span class="title function_ invoke__">drop</span>(movable);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title function_ invoke__">consume</span>();</span><br><span class="line">    <span class="comment">//consume();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Howerver, if we do this:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">use</span> std::mem;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// A non-copy type</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">movable</span> = <span class="type">Box</span>::<span class="title function_ invoke__">new</span>(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">consume</span> = || &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;movable: &#123;:?&#125;&quot;</span>, movable);</span><br><span class="line">        mem::<span class="title function_ invoke__">drop</span>(movable);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="title function_ invoke__">consume</span>();</span><br><span class="line">    <span class="title function_ invoke__">consume</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We would get:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">error[E0382]: use of moved value: `consume`</span><br><span class="line">  --&gt; src/main.rs:11:5</span><br><span class="line">   |</span><br><span class="line">10 |     consume();</span><br><span class="line">   |     ------- value moved here</span><br><span class="line">11 |     consume();</span><br><span class="line">   |     ^^^^^^^ value used here after move</span><br><span class="line">   |</span><br><span class="line">note: closure cannot be invoked more than once because it moves the variable `movable` out of its environment</span><br><span class="line">  --&gt; src/main.rs:8:19</span><br><span class="line">   |</span><br><span class="line">8  |         mem::drop(movable);</span><br><span class="line">   |                   ^^^^^^^</span><br><span class="line"></span><br><span class="line">error: aborting due to previous error</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0382`.</span><br><span class="line">error: Could not compile `capturing_test`.</span><br><span class="line"></span><br><span class="line">To learn more, run the <span class="built_in">command</span> again with --verbose.</span><br></pre></td></tr></table></figure>
+
+<p><code>mem::drop</code> requires <code>T</code> so this mut take by value. A copy type would copy into the closure leaving the original untouched. A non-copy mut move and so <code>movable</code> immediately moves into the closure.</p>
+<h4 id="move"><a href="#move" class="headerlink" title="move"></a><code>move</code></h4><p>Using <code>move</code> before vertical pipes forces closures to take ownership of captured variables:</p>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">vec</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">contains</span> = <span class="keyword">move</span> |needle| vec.<span class="title function_ invoke__">contains</span>(needle);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">contains</span>(&amp;<span class="number">1</span>));</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">contains</span>(&amp;<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>output</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">true</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+
+<p>If we call  <code>vec.len()</code> later:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">vec</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">contains</span> = <span class="keyword">move</span> |needle| vec.<span class="title function_ invoke__">contains</span>(needle);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">contains</span>(&amp;<span class="number">1</span>));</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">contains</span>(&amp;<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, vec.<span class="title function_ invoke__">len</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We would get:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">error[E0382]: borrow of moved value: `vec`</span><br><span class="line"> --&gt; src/main.rs:9:20</span><br><span class="line">  |</span><br><span class="line">2 |     <span class="built_in">let</span> vec = vec![1, 2, 3];</span><br><span class="line">  |         --- move occurs because `vec` has <span class="built_in">type</span> `std::vec::Vec&lt;i32&gt;`, <span class="built_in">which</span> does not implement the `Copy` trait</span><br><span class="line">3 | </span><br><span class="line">4 |     <span class="built_in">let</span> contains = move |needle| vec.contains(needle);</span><br><span class="line">  |                    ------------- --- variable moved due to use <span class="keyword">in</span> closure</span><br><span class="line">  |                    |</span><br><span class="line">  |                    value moved into closure here</span><br><span class="line">...</span><br><span class="line">9 |     println!(<span class="string">&quot;&#123;&#125;&quot;</span>, vec.len());</span><br><span class="line">  |                    ^^^ value borrowed here after move</span><br><span class="line"></span><br><span class="line">error: aborting due to previous error</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0382`.</span><br><span class="line">error: Could not compile `movable_closure_test`.</span><br></pre></td></tr></table></figure>
+
+<p>It’s no doubt that <code>vec</code> has been moved into the closure.</p>
+<h3 id="As-input-parameters"><a href="#As-input-parameters" class="headerlink" title="As input parameters"></a>As input parameters</h3><p>While Rust choose how to capture variables on the fly mostly without type annotaions, this ambiguity is not allowed when writing functions. When taking a closure as an input parameter, the closure’s complete type must be annotated using one of a few <code>traits</code>. In order of decreasing restriction, they are:</p>
+<ul>
+<li><code>Fn</code>: the closure captures by reference(<code>&amp;T</code>)</li>
+<li><code>FnMut</code>: the closure captures by mutable reference(<code>&amp;mut T</code>)</li>
+<li><code>FnOnce</code>: the closure captures by value(<code>T</code>)</li>
+</ul>
+<p>For instance, consider a parameter annotated as <code>FnOnce</code>. This specifies that the closure may caputure by <code>&amp;T</code>, <code>&amp;mutT</code>, or <code>T</code>, but ultimately choose based on how the captured variables are used in the closure.</p>
+<p>This is because if a move is possible, then any type of borrow should also be possible. Note that reverse is not true. If the paramenter is annotated as <code>Fn</code>, then capturing varibales by <code>&amp;mut T</code> or <code>T</code> are not allowed.</p>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">apply</span>&lt;F&gt;(f: F) <span class="keyword">where</span></span><br><span class="line">    F: <span class="title function_ invoke__">FnOnce</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">f</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">apply_to_3</span>&lt;F&gt;(f: F) <span class="punctuation">-&gt;</span> <span class="type">i32</span> <span class="keyword">where</span></span><br><span class="line">    F: <span class="title function_ invoke__">Fn</span>(<span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">f</span>(<span class="number">3</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">use</span> std::mem;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">greeting</span> = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">farewell</span> = <span class="string">&quot;goodbye&quot;</span>.<span class="title function_ invoke__">to_owned</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">dairy</span> = || &#123;</span><br><span class="line">        <span class="comment">// greeting is by reference: requries Fn</span></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;I said &#123;&#125;&quot;</span>, greeting);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Mutation forces `farewell` to be captured by mutable reference </span></span><br><span class="line">        <span class="comment">// Now require FnMut</span></span><br><span class="line">        farewell.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot;!!!&quot;</span>);</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Then I screamed &#123;&#125;&quot;</span>, farewell);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Now require FnOnce</span></span><br><span class="line">        mem::<span class="title function_ invoke__">drop</span>(farewell);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">apply</span>(dairy);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">double</span> = |x| x * <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, <span class="title function_ invoke__">apply_to_3</span>(double));   </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Type-anonymity"><a href="#Type-anonymity" class="headerlink" title="Type anonymity"></a>Type anonymity</h3><p>Using a closure as a parameter requires <strong>generics</strong>.This is necessary because of how thet are defined:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `F` must be generic.</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">apply</span>&lt;F&gt;(f: F) <span class="keyword">where</span></span><br><span class="line">    F: <span class="title function_ invoke__">FnOnce</span>() &#123;</span><br><span class="line">    <span class="title function_ invoke__">f</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When a closure is defined, the compiler implicitly creates a new anonymous structure to store the captured variables inside, meanwhile implementing the functionality via one of the <code>traits</code>: <code>Fn</code>, <code>FnMut</code> or <code>FnOnce</code> for this unknown type. This type is assigned to the variable which is stored until calling.</p>
+<p>Since this new type if of unknown type, any usage in a function will require generics. However, an unbounded type parameter <T> would still be ambigious and not be allowed. Thus, bounding by one of the <code>traits</code>: <code>Fn</code>, <code>FnMut</code> or <code>FnOnce</code>(which it implements) is sufficient to specify its type.</p>
+<h3 id="Input-functions"><a href="#Input-functions" class="headerlink" title="Input functions"></a>Input functions</h3><p>If you declare a function that takes a closure as a parameter, then any <em>function</em> that satisfies the trait bound of that closure can be passed as parameter.</p>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">call_me</span>&lt;F&gt;(f: F) </span><br><span class="line"><span class="keyword">where</span> </span><br><span class="line">    F: <span class="title function_ invoke__">Fn</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="title function_ invoke__">f</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">function</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hi, I&#x27;m a function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">closure</span> = | | <span class="built_in">println!</span>(<span class="string">&quot;Hi, I&#x27;m a closure.&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">call_me</span>(closure);</span><br><span class="line">    <span class="title function_ invoke__">call_me</span>(function);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>function</code> could also be used as a parameter as the same as <code>closure</code>.</p>
+<h3 id="As-output-parameters"><a href="#As-output-parameters" class="headerlink" title="As output parameters"></a>As output parameters</h3><p>Returning closures as output parameters are also possible. However, anoymous closure types are, by definition, unknown, so we have to use <code>impl Trait</code> to return them.</p>
+<p><em>example</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">create_fn</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Fn</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">text</span> = <span class="string">&quot;Fn&quot;</span>.<span class="title function_ invoke__">to_owned</span>();</span><br><span class="line">    <span class="keyword">move</span> || <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, text)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">create_fnmut</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">FnMut</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">text</span> = <span class="string">&quot;FnMut&quot;</span>.<span class="title function_ invoke__">to_owned</span>();</span><br><span class="line">    <span class="keyword">move</span> || <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, text)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">fn_plain</span> = <span class="title function_ invoke__">create_fn</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">fn_mut</span> = <span class="title function_ invoke__">create_fnmut</span>();</span><br><span class="line">    <span class="title function_ invoke__">fn_plain</span>();</span><br><span class="line">    <span class="title function_ invoke__">fn_mut</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note: <code>impl xxTrait</code> means a type that implements <code>xxTrait</code>. </p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Darwinia Eth-Backing
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

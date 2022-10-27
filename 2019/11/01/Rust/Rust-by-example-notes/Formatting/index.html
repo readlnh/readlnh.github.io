@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>Formatting | Hexo</title>
+    
+    
+        <meta name="keywords" content="Rust" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Some notes with Rust by example about formatting. Formatted printPrinting is handle by a series of macros defined in std::fmt some of which include:  format!: write formatted text to String print!: pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Formatting">
+<meta property="og:url" content="http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Some notes with Rust by example about formatting. Formatted printPrinting is handle by a series of macros defined in std::fmt some of which include:  format!: write formatted text to String print!: pr">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-01T18:35:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Rust/Rust-by-example-notes/Formatting" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/Rust-by-example-notes/">Rust-by-example-notes</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">
+            <time datetime="2019-11-01T18:35:00.000Z" itemprop="datePublished">2019-11-01</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/Rust-by-example-notes/Formatting.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/Rust-by-example-notes/Formatting.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/Rust-by-example-notes/Formatting.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Formatting
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <p>Some notes with Rust by example about formatting.</p>
+<h2 id="Formatted-print"><a href="#Formatted-print" class="headerlink" title="Formatted print"></a>Formatted print</h2><p>Printing is handle by a series of <code>macros</code> defined in <code>std::fmt</code> some of which include:</p>
+<ul>
+<li><code>format!</code>: write formatted text to <code>String</code></li>
+<li><code>print!</code>: print fotmatted text to the console(io::stdout) </li>
+<li><code>println!</code>: same as <code>print!</code> but a newline is appended</li>
+<li><code>eprint</code> : same as <code>format!</code>, but the text if printed to the santard error(io::stderr)</li>
+<li><code>eprintln</code>: smae as <code>eprint</code>, but a newline is appended</li>
+</ul>
+<p><code>std::fmt</code> contains many <code>traits</code> which govern the display of text. The base form of two important ones are listed below:</p>
+<ul>
+<li><code>fmt::Debug</code>: Uses the <code>&#123;:?&#125;</code> marker. Format text for debugging purpoes</li>
+<li><code>fmt::Display</code>: Uses the <code>&#123;&#125;</code> marker. Format text in a more elegant, user friendly fashion.</li>
+</ul>
+<p>Note: Implementing the <code>fmt::Display</code> trait automatically implements the <code>ToString</code> trait which allows us to <code>convert</code> the type to <code>String</code>.</p>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>All types which want to use <code>std::fmt</code> formatting <code>traits</code> require an implementation to be printable. Automatic implementations are only provided for types such as in the <code>std</code> library. All others must be* maually* implemented somehow.</p>
+<p>All types can <code>derive</code>(automatically create) the <code>fmt::Debug</code> implementation. This is not true for <code>fmt::Display</code> which must be manually implemented.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cannot be printed either with `fmt::Display` or  with `fmt::Debug`</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">UnPrintable</span>(<span class="type">i32</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// The `derive` attribute automatically creates the implementation </span></span><br><span class="line"><span class="comment">// required to make this `struct` printable with `fmt::Debug` </span></span><br><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DebugUnPrintable</span>(<span class="type">i32</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>fmt::Debug</code> definitely makes this printable but scarifices some elegance.Rust also provides <code>pretty printing</code> with <code>&#123;:#?&#125;</code></p>
+<p>One can manually implemnet <code>fmt::Debug</code> instead of derive.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::&#123;<span class="keyword">self</span>, <span class="built_in">Debug</span>, Formatter&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">TestDebug</span> &#123;</span><br><span class="line">    v1: <span class="type">i32</span>,</span><br><span class="line">    v2: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">TestDebugauto</span> &#123;</span><br><span class="line">    v1: <span class="type">i32</span>,</span><br><span class="line">    v2: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">TestDebugauto</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(x: <span class="type">i32</span>, y: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        TestDebugauto &#123;</span><br><span class="line">            v1: x,</span><br><span class="line">            v2: y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">TestDebug</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(x: <span class="type">i32</span>, y: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        TestDebug &#123;</span><br><span class="line">            v1: x,</span><br><span class="line">            v2: y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Debug</span> <span class="keyword">for</span> <span class="title class_">TestDebug</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> Formatter) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;TestDebug: &#123;&#125; &#123;&#125;&quot;</span>, <span class="keyword">self</span>.v1, <span class="keyword">self</span>.v2)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">   <span class="keyword">let</span> <span class="variable">t</span> = TestDebug::<span class="title function_ invoke__">new</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">   <span class="keyword">let</span> <span class="variable">t2</span> = TestDebugauto::<span class="title function_ invoke__">new</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">   <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;\n&#123;:?&#125;&quot;</span>, t, t2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>output</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   Compiling debug_manually v0.1.0 (/home/readlnh/workspace/rust_workspace/rust-by-example/debug_manually)</span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.29s</span><br><span class="line">     Running `target/debug/debug_manually`</span><br><span class="line">TestDebug: 1 2</span><br><span class="line">TestDebugauto &#123; v1: 1, v2: 2 &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Display"><a href="#Display" class="headerlink" title="Display"></a>Display</h2><p>One can manually implement <code>fmt::Display</code> to control the display,same as <code>fmt::Debug</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">TestDisplay</span> &#123;</span><br><span class="line">    v1: <span class="type">i32</span>,</span><br><span class="line">    v2: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">TestDisplay</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(x: <span class="type">i32</span>, y: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        TestDisplay &#123;</span><br><span class="line">            v1: x,</span><br><span class="line">            v2: y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">fmt</span>::Display <span class="keyword">for</span> <span class="title class_">TestDisplay</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="comment">// Write strictly the two elements into the supplied output</span></span><br><span class="line">        <span class="comment">// stream: `f`. Returns `fmt::Result` which indicates whether the</span></span><br><span class="line">        <span class="comment">// operation succeeded or failed. Note that `write!` uses syntax which</span></span><br><span class="line">        <span class="comment">// is very similar to `println!`.</span></span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;TestDebug: &#123;&#125; &#123;&#125;&quot;</span>, <span class="keyword">self</span>.v1, <span class="keyword">self</span>.v2)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">   <span class="keyword">let</span> <span class="variable">t</span> = TestDisplay::<span class="title function_ invoke__">new</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">   <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><em>output</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   Compiling display_manually v0.1.0 (/home/readlnh/workspace/rust_workspace/rust-by-example/display_manually)</span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.28s</span><br><span class="line">     Running `target/debug/display_manually`</span><br><span class="line">TestDebug: 1 2</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>example for Complex structure</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Complex</span> &#123;</span><br><span class="line">    x: <span class="type">f64</span>,</span><br><span class="line">    y: <span class="type">f64</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Complex</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(x: <span class="type">f64</span>, y: <span class="type">f64</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        Complex &#123;</span><br><span class="line">            x,</span><br><span class="line">            y,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">fmt</span>::Display <span class="keyword">for</span> <span class="title class_">Complex</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter&lt;<span class="symbol">&#x27;_</span>&gt;) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125; + &#123;&#125;i&quot;</span>, <span class="keyword">self</span>.x, <span class="keyword">self</span>.y)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">fmt</span>::<span class="built_in">Debug</span> <span class="keyword">for</span> <span class="title class_">Complex</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter&lt;<span class="symbol">&#x27;_</span>&gt;) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;Complex &#123;&#123; real: &#123;&#125; imag: &#123;&#125; &#125;&#125;&quot;</span>, <span class="keyword">self</span>.x , <span class="keyword">self</span>.y)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">t</span> = Complex::<span class="title function_ invoke__">new</span>(<span class="number">3.3</span>, <span class="number">7.2</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;:?&#125;&quot;</span>, t, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>output</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.01s</span><br><span class="line">     Running `target/debug/complex_display`</span><br><span class="line">3.3 + 7.2i</span><br><span class="line">Complex &#123; real: 3.3 imag: 7.2 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Each <code>write!</code> generates a <code>fmt::Result</code>.Proper handing of this requires dealing with all the results.Rust provides <code>?</code> operater for exactly this purpose.</p>
+<p><em>display for vector</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">List</span>(<span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">fmt</span>::Display <span class="keyword">for</span> <span class="title class_">List</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter&lt;<span class="symbol">&#x27;_</span>&gt;) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="comment">// Extract the value using the type indexing</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">vec</span> = &amp;<span class="keyword">self</span>.<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;[&quot;</span>)?;</span><br><span class="line"></span><br><span class="line">        <span class="title function_ invoke__">for</span> (index, v) <span class="keyword">in</span> vec.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">            <span class="keyword">if</span> index != <span class="number">0</span> &#123;</span><br><span class="line">                <span class="built_in">write!</span>(f, <span class="string">&quot;, &quot;</span>)?;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">write!</span>(f, <span class="string">&quot;&#123;&#125;: &#123;&#125;&quot;</span>, index, v)?;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;]&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">v</span> = <span class="title function_ invoke__">List</span>(<span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>output</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[0: 1, 1: 2, 2: 3]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Formatting"><a href="#Formatting" class="headerlink" title="Formatting"></a>Formatting</h2><p>Formatting is specified via a format string:</p>
+<ul>
+<li><code>format!(&quot;&#123;&#125;&quot;, foo)</code> -&gt; <code>&quot;3735928559&quot;</code></li>
+<li><code>format!(&quot;0x&#123;:X&#125;&quot;, foo)</code> -&gt; <code>&quot;0xDEADBEEF&quot;</code></li>
+<li><code>format!(&quot;0o&#123;:o&#125;&quot;, foo)</code> -&gt; <code>&quot;0o33653337357&quot;</code></li>
+</ul>
+<p>We can pad with zeros to a width of 6 with <code>:06</code></p>
+<p><em>example code Color</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Color</span> &#123;</span><br><span class="line">    r: <span class="type">i32</span>,</span><br><span class="line">    g: <span class="type">i32</span>,</span><br><span class="line">    b: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Color</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">new</span>(r: <span class="type">i32</span>, g: <span class="type">i32</span>, b: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        Color &#123; r, g, b&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">fmt</span>::Display <span class="keyword">for</span> <span class="title class_">Color</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">fmt</span>(&amp;<span class="keyword">self</span>, f: &amp;<span class="keyword">mut</span> fmt::Formatter&lt;<span class="symbol">&#x27;_</span>&gt;) <span class="punctuation">-&gt;</span> fmt::<span class="type">Result</span> &#123;</span><br><span class="line">        <span class="built_in">write!</span>(f, <span class="string">&quot;RGB (&#123;&#125;, &#123;&#125;, &#123;&#125;) 0x&#123;:06X&#125;&quot;</span>, <span class="keyword">self</span>.r, <span class="keyword">self</span>.g, <span class="keyword">self</span>.b, <span class="keyword">self</span>.r * (<span class="number">1</span> &lt;&lt; <span class="number">16</span>) + <span class="keyword">self</span>.g * (<span class="number">1</span> &lt;&lt; <span class="number">8</span>) + <span class="keyword">self</span>.b )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">t1</span> = Color::<span class="title function_ invoke__">new</span>(<span class="number">128</span>, <span class="number">255</span>, <span class="number">90</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">t2</span> = Color::<span class="title function_ invoke__">new</span>(<span class="number">0</span>, <span class="number">3</span>, <span class="number">254</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">t3</span> = Color::<span class="title function_ invoke__">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;\n&#123;&#125;\n&#123;&#125;&quot;</span>, t1, t2, t3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    Primitives
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

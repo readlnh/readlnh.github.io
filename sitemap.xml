@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/hello-world/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/OpenGL/openl_learning01/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/09/22/Rust/local_unpublished_crate_in_Rust/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/09/22/Rust/ref_in_rust/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/09/22/Rust/returning_traits_with_dyn/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/27/Linux/loongson/loongson_on_ubuntu/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/27/Rust/Rust-by-example-notes/Closure/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/01/Rust/Rust-by-example-notes/Formatting/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/06/20/Rust/Rust-by-example-notes/Modules/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/05/Rust/Rust-by-example-notes/Primitives/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/09/22/Rust/blog_os%20notes/note_01/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2019/11/22/Rust/substrate/substrate-workshop_notes/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/about/index.html</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/index.html</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/index.html</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/Linux/APUE/pipe1/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/Linux/docker/cgroup/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/</loc>
+    
+    <lastmod>2022-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>http://readlnh.github.io/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/Rust/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/cargo/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/crate/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/ref/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/dyn/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/trait/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/loognson/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/mipsel/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/cross-compile/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/closure/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/Modules/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/Type/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/os/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/Substrate/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/blcokchain/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/tags/darwinia/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Linux/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/OpenGL/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Linux/docker/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Linux/APUE/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Rust/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Linux/loongson/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Rust/Rust-by-example-notes/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Rust/blog-os-notes/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://readlnh.github.io/categories/Rust/substrate/</loc>
+    <lastmod>2022-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+</urlset>

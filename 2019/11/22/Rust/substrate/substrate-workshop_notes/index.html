@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta name="google-site-verification" content="Bs8BUm3iFrFEVhVQgDoekRz8NzodTvBO1Tjc3brhrwY" />
+    <meta charset="utf-8">
+    
+    <title>Substrate-workshop notes | Hexo</title>
+    
+    
+        <meta name="keywords" content="Rust,Substrate,blcokchain" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="RuntimeThe Runtime is block execution logic of a blockchain, sometimes referred to as the state transition function STF. In Substrate, this is stored on-chain in an implementation-neutal(语言无关的), machi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Substrate-workshop notes">
+<meta property="og:url" content="http://readlnh.github.io/2019/11/22/Rust/substrate/substrate-workshop_notes/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RuntimeThe Runtime is block execution logic of a blockchain, sometimes referred to as the state transition function STF. In Substrate, this is stored on-chain in an implementation-neutal(语言无关的), machi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-22T11:13:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T19:58:23.769Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Substrate">
+<meta property="article:tag" content="blcokchain">
+<meta name="twitter:card" content="summary">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    
+<script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Hexo</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://raw.githubusercontent.com/readlnh/picture/master/fish.jpg" />
+            <h2 id="name">readlnh</h2>
+            <h3 id="title">Programmer &amp; Joker</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shaoxing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/readlnh/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                16
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/readlnh" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="zhihu" class=tooltip>
+                            <i class="fa fa-zhihu"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/atom.xml" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id='categories'>
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id='allExpand' href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Linux
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            APUE
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/APUE/pipe1/">Pipe(管道)的一些理解</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            docker
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/Linux/docker/cgroup/">聊一聊linux中的cgroup</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/linux%20namespce%E6%9C%BA%E5%88%B6%E5%88%9D%E6%8E%A2/">docker技术分析 - linux namespce机制</a></li>  <li class="file"><a href="/2022/10/27/Linux/docker/%E5%A6%82%E4%BD%95%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Cubuntukylin%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F/">如何在docker中运行ubuntukylin桌面系统</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            loongson
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/">How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            OpenGL
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2022/10/27/OpenGL/openl_learning01/">Opengl初学</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Rust
+                        </a>
+                         <ul class="unstyled" id="tree" > 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Rust-by-example-notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2019/11/01/Rust/Rust-by-example-notes/Formatting/">Formatting</a></li>  <li class="file"><a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/">Primitives</a></li>  <li class="file"><a href="/2019/11/27/Rust/Rust-by-example-notes/Closure/">Closure</a></li>  <li class="file"><a href="/2020/06/20/Rust/Rust-by-example-notes/Modules/">Modules</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            blog_os notes
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file"><a href="/2020/09/22/Rust/blog_os%20notes/note_01/">笔记1-独立的Rust应用</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            substrate
+                        </a>
+                         <ul class="unstyled" id="tree" >  <li class="file active"><a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">Substrate-workshop notes</a></li>  <li class="file"><a href="/2019/12/20/Rust/substrate/darwinia_eth_backing_notes/">Darwinia Eth-Backing</a></li>  <li class="file"><a href="/2020/01/03/Rust/substrate/bond_in_darwinia_and_substrate/">Bonding in darwinia and substrate</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2020/09/22/Rust/local_unpublished_crate_in_Rust/">How to use local unpublished crate in Rust by cargo</a></li>  <li class="file"><a href="/2020/09/22/Rust/ref_in_rust/">ref in Rust</a></li>  <li class="file"><a href="/2020/09/22/Rust/returning_traits_with_dyn/">Returning Traits with `dyn`</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/2022/10/27/hello-world/">Hello World</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title"><span>tags</span></h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modules/" rel="tag">Modules</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rust/" rel="tag">Rust</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Substrate/" rel="tag">Substrate</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type/" rel="tag">Type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blcokchain/" rel="tag">blcokchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cargo/" rel="tag">cargo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/closure/" rel="tag">closure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crate/" rel="tag">crate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-compile/" rel="tag">cross-compile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/darwinia/" rel="tag">darwinia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dyn/" rel="tag">dyn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loognson/" rel="tag">loognson</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mipsel/" rel="tag">mipsel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/os/" rel="tag">os</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ref/" rel="tag">ref</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trait/" rel="tag">trait</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Rust/substrate/substrate-workshop_notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Rust/">Rust</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Rust/substrate/">substrate</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link-link" href="/tags/Substrate/" rel="tag">Substrate</a>, <a class="tag-link-link" href="/tags/blcokchain/" rel="tag">blcokchain</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2019/11/22/Rust/substrate/substrate-workshop_notes/">
+            <time datetime="2019-11-22T11:13:00.000Z" itemprop="datePublished">2019-11-22</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/raw/hexo/source/_posts/Rust/substrate/substrate-workshop_notes.md'> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/edit/hexo/source/_posts/Rust/substrate/substrate-workshop_notes.md'> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="noopener" href='https://github.com/readlnh/readlnh.github.io/commits/hexo/source/_posts/Rust/substrate/substrate-workshop_notes.md'> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Substrate-workshop notes
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+        
+        
+            <h2 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h2><p>The Runtime is block execution logic of a blockchain, sometimes referred to as the state transition function <code>STF</code>. In <em>Substrate</em>, this is stored on-chain in an implementation-neutal(语言无关的), machine-executable(机器可执行的) format as a WebAssembly binary.</p>
+<p><strong>Other system</strong></p>
+<ul>
+<li>Ethereum(human-readable format)</li>
+<li>Bitcoin(not at all)</li>
+</ul>
+<p> The runtime is composed of multiple features and functionalities which work together to power your blockchain. Things like:</p>
+<ul>
+<li>Account Management</li>
+<li>Token Balances</li>
+<li>Governance</li>
+<li>Runtime Upgrades</li>
+<li>and more…</li>
+</ul>
+<h2 id="Creating-a-Module"><a href="#Creating-a-Module" class="headerlink" title="Creating a Module"></a>Creating a Module</h2><p>First, we need to create a module for our runtime. For that we will work with an empty module template which we will place in a new <code>substratekitties.rs</code> file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">substratekitties</span><br><span class="line">|</span><br><span class="line">+-- runtime</span><br><span class="line">    |</span><br><span class="line">    +-- src</span><br><span class="line">        |</span><br><span class="line">        +-- lib.rs</span><br><span class="line">        |</span><br><span class="line">        +-- * substratekitties.rs</span><br><span class="line">    |</span><br><span class="line">    +-- template.rs </span><br></pre></td></tr></table></figure>
+
+<p><em>substratekitties.rs</em></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> support::&#123;decl_storage, decl_module&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span>: system::Trait&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> KittyStorage &#123;</span><br><span class="line">        <span class="comment">// Declare storge and getter functions here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="comment">// Declare public functions here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This template allows us to start writing the most basic parts of our module, the public functions and the storage.</p>
+<p><em>Note: The line <code>trait Store for Module&lt;T: Trait&gt; as NAME</code> is macro magic. That line as written is not valid Rust, but it gets converted to valid Rust code through the <code>decl_storage! macro</code>.</em></p>
+<h2 id="Updating-our-Runtime"><a href="#Updating-our-Runtime" class="headerlink" title="Updating our Runtime"></a>Updating our Runtime</h2><p>For each module, we should:</p>
+<ul>
+<li>Import the Rust file containing the module</li>
+<li>Implement its trait</li>
+<li>Include the module into the <code>construct_runtime!</code> macro</li>
+</ul>
+<p><strong>Firstly</strong>, import the <code>substratekitties.rs</code>.<br>We should add this line into the <code>lib.rs</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.rs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// Index of a block number in the chain.</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">type</span> <span class="title class_">BlockNumber</span> = <span class="type">u64</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// Index of an account&#x27;s extrinsic in the chain.</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">type</span> <span class="title class_">Nonce</span> = <span class="type">u64</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add this line</span></span><br><span class="line"><span class="keyword">mod</span> substratekitties;</span><br></pre></td></tr></table></figure>
+
+<p><em>Secondlly</em>, implement the traits. Our <code>Triat</code> implementation is very simple, because we haven’t defined anything in it yet.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib.rs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">sudo</span>::Trait <span class="keyword">for</span> <span class="title class_">Runtime</span> &#123;</span><br><span class="line">	<span class="comment">/// The uniquitous event type.</span></span><br><span class="line">	<span class="keyword">type</span> <span class="title class_">Event</span> = Event;</span><br><span class="line">	<span class="keyword">type</span> <span class="title class_">Proposal</span> = Call;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add the implementation here</span></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">substratekitties</span>::Trait <span class="keyword">for</span> <span class="title class_">Runtime</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Finally</strong>, add this line at the end of our <code>construct_runtime!</code> definition:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// lib.rs</span><br><span class="line"></span><br><span class="line">construct_runtime!(</span><br><span class="line">	pub enum Runtime with Log(InternalLog: DigestItem&lt;Hash, AuthorityId, AuthoritySignature&gt;) where</span><br><span class="line">		Block = Block,</span><br><span class="line">		NodeBlock = opaque::Block,</span><br><span class="line">		UncheckedExtrinsic = UncheckedExtrinsic</span><br><span class="line">	&#123;</span><br><span class="line">		System: system::&#123;default, Log(ChangesTrieRoot)&#125;,</span><br><span class="line">		Timestamp: timestamp::&#123;Module, Call, Storage, Config&lt;T&gt;, Inherent&#125;,</span><br><span class="line">		Consensus: consensus::&#123;Module, Call, Storage, Config&lt;T&gt;, Log(AuthoritiesChange), Inherent&#125;,</span><br><span class="line">		Aura: aura::&#123;Module&#125;,</span><br><span class="line">		Indices: indices,</span><br><span class="line">		Balances: balances,</span><br><span class="line">		Sudo: sudo,</span><br><span class="line">		</span><br><span class="line">		// Add this line</span><br><span class="line">		Substratekitties: substratekitties::&#123;Module, Call, Storage&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>Note than we have added three <code>types</code> to this definition(<code>Module</code>, <code>Call</code>, <code>Storage</code>), all of which are produced by the macros defined in our template.</p>
+<h2 id="Creating-a-Storage-Value"><a href="#Creating-a-Storage-Value" class="headerlink" title="Creating a Storage Value"></a>Creating a Storage Value</h2><p>Let’s add a function which stores a variable. Substrate natively supports all the primitive types avaliable in Rust(<code>bool</code>, <code>u8</code>, <code>u32</code>, etc..) and custom types sepcific to Substrate(<code>AccountId</code>m <code>BlockNumber</code>, <code>Hash</code>, <a target="_blank" rel="noopener" href="https://polkadot.js.org/api/types/#codec-types">etc..</a> )</p>
+<p>We can declare a simple storage item like this:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> Example &#123;</span><br><span class="line">        MyU32: <span class="type">u32</span>;</span><br><span class="line">        MyBool <span class="title function_ invoke__">get</span>(my_bool_getter): <span class="type">bool</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here we have defined two variables: a <code>u32</code> and a <code>bool</code> with a getter function named <code>my_bool_getter</code>. The <code>get</code> parameter is <strong>optional</strong>, but i<em>f you add it to your storage item it will expose a getter function with the name specified(<code>fn getter_name() -&gt; Type</code>)</em>.</p>
+<p>To store these basic values, we need to import the <code>support::StorageValue</code> module.</p>
+<p>The function used to access a <code>StorageValue</code> are defined in <a target="_blank" rel="noopener" href="https://substrate.dev/rustdocs/v1.0/srml_support/storage/trait.StorageValue.html">StorageValue</a>.</p>
+<p>Now, create a storage value called <code>Value</code> which stores as <code>u64</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> KittyStorage &#123;</span><br><span class="line">        <span class="comment">// Declare storage and getter functions here</span></span><br><span class="line">        Value: <span class="type">u64</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Storing-a-Value"><a href="#Storing-a-Value" class="headerlink" title="Storing a Value"></a>Storing a Value</h2><p>Now that we have our <em>storage value</em> declared in our runtime, we can actually create a <em>function</em> to push a value to it.</p>
+<h3 id="Declaring-a-public-function"><a href="#Declaring-a-public-function" class="headerlink" title="Declaring a public function"></a>Declaring a public function</h3><p>We need to define runtime functions that will set and modify our storage values. This can be done within our <code>decl_module!</code> macro, which declares all the entry points that your module handles.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add these imports: </span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">use</span> support::&#123;dispatch::<span class="type">Result</span>, StorageValue&#125;;</span><br><span class="line"><span class="keyword">use</span> system::ensure_signed;</span><br><span class="line"></span><br><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="comment">// Declare public functions here</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">set_value</span>(origin, value: <span class="type">u64</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">_sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">            &lt;Value&lt;T&gt;&gt;::<span class="title function_ invoke__">put</span>(value);</span><br><span class="line"></span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Function-Structure"><a href="#Function-Structure" class="headerlink" title="Function Structure"></a>Function Structure</h3><p>Module functions exposed here should always take the form:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">foo</span>(origin, bar: Bar, baz: Baz, ...) <span class="punctuation">-&gt;</span> <span class="type">Result</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Origin"><a href="#Origin" class="headerlink" title="Origin"></a>Origin</h4><p>The first argument of these function is always <code>origin</code>. <code>origin</code> contains information about where the call originated from. This is generally split into three groups:</p>
+<ul>
+<li>Public calls that are signed by an external account.</li>
+<li>Root calls that are allowed to be made only by the governance system.</li>
+<li>Inherent calls that are allowed to be made only by the block authors and validators.</li>
+</ul>
+<h4 id="Checking-for-a-Signed-Message"><a href="#Checking-for-a-Signed-Message" class="headerlink" title="Checking for a Signed Message"></a>Checking for a Signed Message</h4><p>The first argument in any of these module functions is the <code>origin</code>. There are three convenience call in <code>system</code> that do the matching for your and return a convenient result: <code>ensure_signed</code>, <code>ensure_root</code> and <code>ensire_inherent</code>. <strong>You should always match against them as the first thing you do in your function.</strong></p>
+<p>We can use the <code>ensure_signed()</code> function from <code>system::ensure_signed</code> to check the origin, and “ensure” that the messaged is signed by a valid account.</p>
+<h2 id="Storage-Mapping"><a href="#Storage-Mapping" class="headerlink" title="Storage Mapping"></a>Storage Mapping</h2><p>Our last runtime only allowed us to <strong>store a single value across all users</strong> of our blockchain. As we start thinking toward our collectables chain, it makes sense to add support to have their own value stored.</p>
+<p>To enable this, we will replace our single value storage with a storage mapping.</p>
+<p>The functions used to access a StorageMap are in <a target="_blank" rel="noopener" href="https://substrate.dev/rustdocs/v1.0/srml_support/storage/trait.StorageMap.html">StorageMap</a> </p>
+<p>Now our storage example is updated to store a map from <code>AccountId</code> to a <code>u64</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// change `StorageValue` to `StorageMap`</span></span><br><span class="line"></span><br><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="comment">// Declare public functions here</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">set_value</span>(origin, value: <span class="type">u64</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">            &lt;Value&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(sender, value);</span><br><span class="line"></span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Storing-a-Structure"><a href="#Storing-a-Structure" class="headerlink" title="Storing a Structure"></a>Storing a Structure</h2><p>We can define a <code>struct</code> for digital kitties and store them in our runtime storage like so:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Encode, Decode, Default, Clone, PartialEq)]</span></span><br><span class="line"><span class="meta">#[cfg_attr(feature = <span class="string">&quot;std&quot;</span>, derive(Debug))]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Kitty</span>&lt;Hash, Balance&gt; &#123;</span><br><span class="line">    id: Hash,</span><br><span class="line">    dna: Hash,</span><br><span class="line">    price: Balance,</span><br><span class="line">    gen: <span class="type">u64</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note: To use the custom <code>Encode</code> and <code>Decode</code> traits, you will need to import them from the <code>parity_codec</code> crate:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> parity_codec::&#123;Encode, Decode&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>We define our example struct using a generic as one of the types that we store. This will be important when trying to use custom Substrate types like <code>AccountId</code> or <code>Balance</code> within our struct as we wil need to pass in these types every time we use our struct.</p>
+<p>So, if we wanted to store a <code>Balance</code> in <code>some_generic</code> and <code>Hash</code> in <code>some_other_generic</code>, we wiuld need to define our storage item like this:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> Example &#123;</span><br><span class="line">        MyItem: map T::AccountId =&gt; MyStruct&lt;T::Balance, T::Hash&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>For the purpose of clarity, we will name a generic type for <code>T::AccountId</code> as <code>AccountId</code> and <code>T::Balance</code> as <code>Balance</code>.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/paritytech/substrate/wiki/FAQ">Read More</a> </p>
+<p>For our example:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> KittyStorage &#123;</span><br><span class="line">        <span class="comment">// Declare storage and getter functions here</span></span><br><span class="line">        OwnedKitty <span class="title function_ invoke__">get</span>(kitty_of_owner): map T::AccountId =&gt; Kitty&lt;T::Hash, T::Balance&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We update the storage item to sotre a <code>Kitty&lt;T::Hash, T::Balance&gt;</code>, add a getter function named <code>kitty_of_owner</code>.</p>
+<p>Now, we have initialized our custom struct in our runtime storage, we can now push values and modify it.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="comment">// Declare public functions here</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">create_kitty</span>(origin) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> <span class="variable">new_kitty</span> = Kitty &#123;</span><br><span class="line">                id: &lt;T <span class="keyword">as</span> system::Trait&gt;::Hashing::<span class="title function_ invoke__">hash_of</span>(&amp;<span class="number">0</span>),</span><br><span class="line">                dna: &lt;T <span class="keyword">as</span> system::Trait&gt;::Hashing::<span class="title function_ invoke__">hash_of</span>(&amp;<span class="number">0</span>),</span><br><span class="line">                price: &lt;T::Balance <span class="keyword">as</span> As&lt;<span class="type">u64</span>&gt;&gt;::<span class="title function_ invoke__">sa</span>(<span class="number">0</span>),</span><br><span class="line">                gen: <span class="number">0</span>,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            &lt;OwnedKitty&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(sender, new_kitty);</span><br><span class="line">            </span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Generating-Random-Data"><a href="#Generating-Random-Data" class="headerlink" title="Generating Random Data"></a>Generating Random Data</h2><p>Now, we allowed each user to create their own kitty. However, they weren’t very unique. Let’s fix that.</p>
+<h3 id="Generating-a-Random-Seed"><a href="#Generating-a-Random-Seed" class="headerlink" title="Generating a Random Seed"></a>Generating a Random Seed</h3><p>In order to tell these kitties apart, we need to generate a unique <code>id</code> for each kitty and some random <code>dna</code>.</p>
+<p>We can securely fetch some randomness from our chain using the <code>system</code> module:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;system::Module&lt;T&gt;&gt;::<span class="title function_ invoke__">random_seed</span>()</span><br></pre></td></tr></table></figure>
+
+<p>Substrate uses a safe mixing algorithm that uses the entropy of previous blocks to generate new random data for each subsequent block.</p>
+<p>However, since it is dependent on previous blocks, it can take over 80 blocks to fully warm up, and you may notice the seed will not change until then.</p>
+<h3 id="Using-a-Nonce"><a href="#Using-a-Nonce" class="headerlink" title="Using a Nonce"></a>Using a Nonce</h3><p>Since the random seed does not change for multiple transactions in the same block, and since it may not even generate a random seed for the first 80 blocks, it is important that we also introduce a <code>nonce</code> which our module can manage. Furthermore, we can also user a user specific property like the <code>AccountId</code> to introduce a bit more entropy.</p>
+<h3 id="Hashing-Data"><a href="#Hashing-Data" class="headerlink" title="Hashing Data"></a>Hashing Data</h3><p>A random number generator:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">nonce</span> = &lt;Nonce&lt;T&gt;&gt;::<span class="title function_ invoke__">get</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">random_seed</span> = &lt;system::Module&lt;T&gt;&gt;::<span class="title function_ invoke__">random_seed</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> <span class="variable">random_hash</span> = (random_seed, &amp;sender, nonce).<span class="title function_ invoke__">using_encoded</span>(&lt;T <span class="keyword">as</span> system::Trait&gt;::Hashing::hash);</span><br></pre></td></tr></table></figure>
+
+<p>We can use this <code>random_hash</code> to populate both the <code>id</code> and <code>dna</code> for our kitty.</p>
+<p><code>using_encoded</code>: Convert self to a slice and then <em>invoke the given closure with it</em>.</p>
+<h3 id="Checking-for-Collision"><a href="#Checking-for-Collision" class="headerlink" title="Checking for Collision"></a>Checking for Collision</h3><p>The <code>id</code> on the <code>Kitty</code> should be unique. We can do this with a new storage item <code>Kitties</code> which will be a mapping from <code>id</code>(<code>Hash</code>) to the <code>Kitty</code> object.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Kitties: map T::Hash =&gt; Kitty&lt;T::Hash, T::Balance&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>For this object, we can easily check for collisions by simply checking whether this storage item already contains a mapping using a particular <code>id</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ensure!(!&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(random_hash), <span class="string">&quot;This id is already exists&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Updating-the-code"><a href="#Updating-the-code" class="headerlink" title="Updating the code"></a>Updating the code</h3><p>So we should update our storage module. First, we should add tewo new kitty storage item.</p>
+<ul>
+<li><code>Kitties</code><br>  point from our kitty’s id to the <code>Kitty</code> object</li>
+<li><code>KittyOwner</code><br>  point from our kitty’s id to the owner</li>
+</ul>
+<p>Then update the <code>OwnedKitty</code> storage below to store the kitty’s id rather than the <code>Kitty</code> object.</p>
+<p>Finally, add a <code>u64</code> value named <code>Nonce</code>.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> KittyStorage &#123;</span><br><span class="line">        <span class="comment">// Declare storage and getter functions here</span></span><br><span class="line">        Kitties: map T::Hash =&gt; Kitty&lt;T::Hash, T::Balance&gt;;</span><br><span class="line">        KittyOwner: map T::Hash =&gt; <span class="type">Option</span>&lt;T::AccountId&gt;;</span><br><span class="line">        </span><br><span class="line">        OwnedKitty <span class="title function_ invoke__">get</span>(kitty_of_owner): map T::AccountId =&gt; T::Hash;</span><br><span class="line"></span><br><span class="line">        Nonce: <span class="type">u64</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>create_kitty</code> should be updated too:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="comment">// Declare public functions here</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">create_kitty</span>(origin) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">nonce</span> = &lt;Nonce&lt;T&gt;&gt;::<span class="title function_ invoke__">get</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">random_seed</span> = &lt;system::Module&lt;T&gt;&gt;::<span class="title function_ invoke__">random_seed</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> <span class="variable">random_hash</span> = (random_seed, &amp;sender, nonce).<span class="title function_ invoke__">using_encoded</span>(&lt;T <span class="keyword">as</span> system::Trait&gt;::Hashing::hash);</span><br><span class="line"></span><br><span class="line">            ensure!(!&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(random_hash), <span class="string">&quot;This id is already exists&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &lt;Nonce&lt;T&gt;&gt;::<span class="title function_ invoke__">mutate</span>(|n| *n += <span class="number">1</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">let</span> <span class="variable">new_kitty</span> = Kitty &#123;</span><br><span class="line">                id: random_hash,</span><br><span class="line">                dna: random_hash,</span><br><span class="line">                price: &lt;T::Balance <span class="keyword">as</span> As&lt;<span class="type">u64</span>&gt;&gt;::<span class="title function_ invoke__">sa</span>(<span class="number">0</span>),</span><br><span class="line">                gen: <span class="number">0</span>,</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            &lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(random_hash, new_kitty);</span><br><span class="line">            &lt;KittyOwner&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(random_hash, &amp;sender);</span><br><span class="line"></span><br><span class="line">            &lt;OwnedKitty&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;sender, random_hash);</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Nonce</code> will be a new item in our storage which we will <em>simply increment whenever we use it</em>.</p>
+<h2 id="Creating-an-Event"><a href="#Creating-an-Event" class="headerlink" title="Creating an Event"></a>Creating an Event</h2><p>On Substrate, <strong>even though a transaction may be finalized, it does not necessarily imply that the function executed by that transaction fully succeed.</strong></p>
+<p>To know that, we should <strong>emit an <code>Event</code> at the end of the function</strong> to not only report success, but to tell the “off-chain world” that some particular state transition has happened.</p>
+<h3 id="Declaring-an-Event"><a href="#Declaring-an-Event" class="headerlink" title="Declaring an Event"></a>Declaring an Event</h3><p><code>decl_event!</code> macro, example of an event declaration:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">decl_event!(</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">enum</span> <span class="title class_">Event</span>&lt;T&gt;</span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        &lt;T <span class="keyword">as</span> system::Trait&gt;::AccountId,</span><br><span class="line">        &lt;T <span class="keyword">as</span> system::Trait&gt;::Balance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title function_ invoke__">MyEvent</span>(<span class="type">u32</span>, Balance),</span><br><span class="line">        <span class="title function_ invoke__">MyOtherEvent</span>(Balance, AccountId),</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>In our kitty-example:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">decl_event! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">enum</span> <span class="title class_">Event</span>&lt;T&gt;</span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        &lt;T <span class="keyword">as</span> system::Trait&gt;::AccountId,</span><br><span class="line">        &lt;T <span class="keyword">as</span> system::Trait&gt;::Hash,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title function_ invoke__">Created</span>(AccountId, Hash),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If we want to use some custom Substrate types, we need to integerate generics into our event definition.</p>
+<h3 id="Adding-an-Event"><a href="#Adding-an-Event" class="headerlink" title="Adding an Event"></a>Adding an Event</h3><p>The decl_event! macro will generate a new Event type which you will need to expose in your module. This type will need to inherit some traits like so:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">trait</span> <span class="title class_">Trait</span>: balances::Trait &#123;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Event</span>: <span class="built_in">From</span>&lt;Event&lt;<span class="keyword">Self</span>&gt;&gt; + <span class="built_in">Into</span>&lt;&lt;<span class="keyword">Self</span> <span class="keyword">as</span> system::Trait&gt;::Event&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Depositing-an-Event"><a href="#Depositing-an-Event" class="headerlink" title="Depositing an Event"></a>Depositing an Event</h3><p>In order to use events within your runtime, you need to add a function which deposits those events. The <code>decl_module!</code> macro can automatically add a default implementation of this to your module.</p>
+<p>Add this to the <code>decl_module</code>:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">deposit_event</span>&lt;T&gt;() = default;</span><br></pre></td></tr></table></figure>
+<p>If you do not use any generics:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">deposit_event</span>() = default;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Calling-deposit-event"><a href="#Calling-deposit-event" class="headerlink" title="Calling deposit_event()"></a>Calling <code>deposit_event()</code></h3><p>Just provide the values that go along with our Event <code>definition</code> at the end of our function.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">my_value</span> = <span class="number">1337</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">my_balance</span> = &lt;T::Balance <span class="keyword">as</span> As&lt;<span class="type">u64</span>&gt;&gt;::<span class="title function_ invoke__">sa</span>(<span class="number">1337</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">Self</span>::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">MyEvent</span>(my_value, my_balance));</span><br></pre></td></tr></table></figure>
+
+<p>So to our projects:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Self</span>::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">Created</span>(sender, random_hash));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Updating-lib-rs-to-Include-Events"><a href="#Updating-lib-rs-to-Include-Events" class="headerlink" title="Updating lib.rs to Include Events"></a>Updating <code>lib.rs</code> to Include Events</h3><p>In the module <code>Trait</code> implementation:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `lib.rs`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">mymodule</span>::Trait <span class="keyword">for</span> <span class="title class_">Runtime</span> &#123;</span><br><span class="line">    <span class="keyword">type</span> <span class="title class_">Event</span> = Event;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Include the <code>Event</code> or <code>Event&lt;T&gt;</code> type to the module’s definition in the <code>construct_runtime!</code> macro.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">construct_runtime!(</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">enum</span> <span class="title class_">Runtime</span> with <span class="title function_ invoke__">Log</span>(InternalLog: DigestItem&lt;Hash, Ed25519AuthorityId&gt;) <span class="keyword">where</span></span><br><span class="line">        Block = Block,</span><br><span class="line">        NodeBlock = opaque::Block,</span><br><span class="line">        InherentData = BasicInherentData</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        MyModule: mymodule::&#123;Module, Call, Storage, Event&lt;T&gt;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Why-we-need-events"><a href="#Why-we-need-events" class="headerlink" title="Why we need events?"></a>Why we need events?</h4><p>Followings are some of my understandings:</p>
+<p>Substrate runtime module does not support <code>println!</code> macros for us to check the output from Substrate. However, we can deposit events from our substrate code and see it in polkadot.js apps. In <strong>extrinsics</strong> menu, we make a extrinsic which we built from our runtime and see events in the <strong>explorer</strong> menu.</p>
+<h2 id="Tracking-All-Kitties"><a href="#Tracking-All-Kitties" class="headerlink" title="Tracking All Kitties"></a>Tracking All Kitties</h2><h3 id="Verify-First-Write-Last"><a href="#Verify-First-Write-Last" class="headerlink" title="Verify First, Write Last"></a>Verify First, Write Last</h3><p>There’s big difference between Substrate and Etherenum. On Ethereum, if at any point your transaction fails (error, out of gas, etc…), the state of your smart contract will be unaffected. Howerver, on Substrate this is not the case. <em>As soon as a transaction starts to modify the storage of the blockchain, those changes are <strong>parmanent</strong>, even if the transaction would fail at a later time during runtime execution.</em></p>
+<p>As a Substrate runtime developer, we must follow “Verify first, write last” pattern.</p>
+<h3 id="Creating-a-List"><a href="#Creating-a-List" class="headerlink" title="Creating a List"></a>Creating a List</h3><p>Substrate does support lists in the form of an <a target="_blank" rel="noopener" href="https://substrate.dev/rustdocs/v1.0/srml_support/storage/trait.EnumerableStorageMap.html">EnumerableStorageMap</a>.</p>
+<p>In runtime development, list iteration is, generally speaking, dangerous. Unless explicitly guarded against, <strong>runtime functions which enumerate a list will add O(N) complexity, but only charge O(1) fees</strong>. As a result, the chain can be vulnerable to attacks. Furthermore, if the lists you iterate over are large or even unbounded, <strong>your runtime may need more time to process the list than what is allocated between blocks. This means that a block producer may not even be able to create new blocks!</strong></p>
+<p>For this reason, we will not use any list iteration in our runtime logic. Instead, we will emulate an enumerable map with a mapping and a counter like so:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">decl_storage! &#123;</span><br><span class="line">    <span class="keyword">trait</span> <span class="title class_">Store</span> <span class="keyword">for</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">as</span> KittyStorage &#123;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        AllKittiesArray <span class="title function_ invoke__">get</span>(kitty_by_index): map <span class="type">u64</span> =&gt; T::Hash;</span><br><span class="line">        AllKittiesCount <span class="title function_ invoke__">get</span>(all_kitties_count): <span class="type">u64</span>;</span><br><span class="line">        </span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Here we are storing a list of kitty in our runtime represented by <code>T::Hash</code>.</p>
+<p>(有了这两个item以后，我们可以通过all_kitties_count来获得当前的kitty数，然后根据index(<code>最后一个索引index = count - 1</code>)去索引对应的kitty，就可以追踪到所有的kitty了，即遍历<code>0 ~ count -1</code>的<code>index</code>就可以遍历所有的kitty了)。</p>
+<h3 id="Checking-for-Overflow-x2F-Underflow"><a href="#Checking-for-Overflow-x2F-Underflow" class="headerlink" title="Checking for Overflow&#x2F;Underflow"></a>Checking for Overflow&#x2F;Underflow</h3><p>Overflow and underflows are an easy way to cause our runtime to panic or for our storage to get messed up. We must always be proactive about checking for possible runtime errors before we make changes to our state. Ulike Ethereum, when a transaction fails, the state is <strong>NOT</strong> reverted back to before the transaction, so it is your responsibility to <strong>ensure that there are no side effect on error</strong>.</p>
+<p>Fortuanately, checking for these kinds of errors are quite simple in Rust where primitive number types have <code>checked_add()</code> and <code>checked_sub()</code> functions.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">all_kitties_count</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">all_kitties_count</span>();</span><br><span class="line"><span class="keyword">let</span> <span class="variable">new_all_kitties_count</span> = all_kitties_count.<span class="title function_ invoke__">checked_add</span>(<span class="number">1</span>).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;Overflow adding a new kitty&quot;</span>)?;</span><br></pre></td></tr></table></figure>
+
+<p>Using <code>ok_or</code> is the same as writing:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">new_all_kitties_count</span> = <span class="keyword">match</span> all_kitties_count.<span class="title function_ invoke__">check_add</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">Some</span>(x) =&gt; x,</span><br><span class="line">    <span class="title function_ invoke__">Err</span>(<span class="string">&quot;Overflow adding a new kitty&quot;</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Make sure to remember the <code>?</code> at the end.</p>
+<h3 id="Updating-our-List-in-Storage"><a href="#Updating-our-List-in-Storage" class="headerlink" title="Updating our List in Storage"></a>Updating our List in Storage</h3><p>Now that we have checked that we can safely increament our list, we can finally push changes to our storage. Remember that when you update your list, the <em>“last index” of your list is one less than the count</em>. For example, in a list with 2 items, the first item is index 0, and the second item is index 1.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">create_kitty</span>(origin) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">all_kitties_count</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">all_kitties_count</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">new_all_kitties_count</span> = all_kitties_count.<span class="title function_ invoke__">checked_add</span>(<span class="number">1</span>).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;Overflow addina new kitty&quot;</span>)?</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// (`index` is `count - 1` = `new_all_kitties_count 1` = `all_kitties_count`)</span></span><br><span class="line">    &lt;AllKittiesArray&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(all_kitties_count, random_hash); </span><br><span class="line">    &lt;AllKittiesCount&lt;T&gt;&gt;::<span class="title function_ invoke__">put</span>(new_all_kitties_count);</span><br><span class="line">    &lt;AllKittiesIndex&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(random_hash, all_kitties_count)</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+
+<p>First, we get the current <code>AllKittiesCount</code> value and store it in <code>all_kitties_count</code>. Then create a <code>new_all_kitties_count</code> by doing a <code>checked_add()</code> to increment <code>all_kitties_count</code>. We also map the index(<code>all_kitties_count</code> &#x3D; <code>new_kitties_count -1</code>, remember the <code>index</code> is <code>count -1</code> ) to the kitty(<code>random_hash</code>).</p>
+<h3 id="Deleting-From-Our-List"><a href="#Deleting-From-Our-List" class="headerlink" title="Deleting From Our List"></a>Deleting From Our List</h3><p>One problem that this <code>map</code> and <code>count</code> pattern introduces is holes in our list when we try to remove elements from the middle. Fortunately, the order of the list we want to manage in our example is not important, so we can use a “swap and pop” method to efficiently mitigate this issue.</p>
+<p>The “swap and pop” method switches the position of the item we want to remove and the last item in our list. Then, we can simply remove the last item without introducing any holes to our list.</p>
+<p>Rather than run a loop to find the index of the item we want to remove each time we remove an item, we will use a little extra storage to keep track of each item and its position in our list.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AllKittiesIndex: map T::Hash =&gt; <span class="type">u64</span>;</span><br></pre></td></tr></table></figure>
+
+<p>（简单来讲其实就是每次先交换要删除的kitty和整个list里最后一个kitty，交换完后把最后一个kitty删掉就好，这样一来就不会因为删除在list里留下空缺。同时，我们用<code>AllKittiesIndex</code>这个数据结构来映射kitty和index，这样就不需要每次删除kitty的时候还要遍历整个list去找它的index）</p>
+<h2 id="Owning-Multiple-Kitties"><a href="#Owning-Multiple-Kitties" class="headerlink" title="Owning Multiple Kitties"></a>Owning Multiple Kitties</h2><p>Right now our storage can only track one kitty per user, howerver one user can own multiple kitties.</p>
+<blockquote>
+<p>Note: 其实这种说法并不准确，虽然对于每个user只能看到最新的一只kitty，但是实际上通过某只kitty还是可以追踪到它的owner的。 (Though every user can only check the last kitty he has, we can find the kitty’s owner by <code>KittyOwner</code>.)</p>
+</blockquote>
+<h3 id="Using-tuples-to-emulate-higher-order-arrays"><a href="#Using-tuples-to-emulate-higher-order-arrays" class="headerlink" title="Using tuples to emulate higher order arrays"></a>Using tuples to emulate higher order arrays</h3><p>We could use a tuple to represent ownership of multiple items across multiple users.</p>
+<p>Here is how we could build a “kitty list” unique to each person using such a structure:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OwnedKittiesArray <span class="title function_ invoke__">get</span>(kitty_of_owner_by_index): <span class="title function_ invoke__">map</span> (T::AccountId, <span class="type">u64</span>) =&gt; T::Hash;</span><br><span class="line">OwnedKittiesCount <span class="title function_ invoke__">get</span>(owned_kitty_count): map T::AccountId =&gt; <span class="type">u64</span>;</span><br></pre></td></tr></table></figure>
+
+<p>This should emulate a more standard two-dimensional array like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OwnedKittiesArray[AccountId][index] -&gt; (one)kitty</span><br></pre></td></tr></table></figure>
+<p>Also we can get the number of kitties for a user like:        </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OwnedKittiesArray[AccountId].<span class="title function_ invoke__">length</span>() = <span class="title function_ invoke__">owned_kitty_count</span>() = OwnedKittiesCount[AccountId]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Relative-Index"><a href="#Relative-Index" class="headerlink" title="Relative Index"></a>Relative Index</h3><p>Just as before, we can optimize the computational work our runtime needs to do by indexing the location of items. The general approach to this would be to reserve the mapping of <code>OwnedKittiesArray</code>:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// (T::AccountId, T::Hash) -&gt; `index` in `OwnedKittiesArray`</span></span><br><span class="line">OwnedKittiesIndex: <span class="title function_ invoke__">map</span> (T::AccountId, T::Hash) =&gt; <span class="type">u64</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Howerver, our kitties all have unique identifiers as a <code>Hash</code>, and cannot be owned by more than one user, we can actually simplify this structure:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OwnedKittiesIndex: map T::Hash =&gt; <span class="type">u64</span>;</span><br></pre></td></tr></table></figure>
+
+<p>This index tells us for a given kitty, where to look in the <em>owners</em> array for that item.</p>
+<h2 id="Refactoring-our-code"><a href="#Refactoring-our-code" class="headerlink" title="Refactoring our code"></a>Refactoring our code</h2><p>Within our runtime, we are able to include an implementation of our runtime module like so:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;T: Trait&gt; Module&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">// our function here    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Functions in this block are usually public interfaces or private functions. Public interfaces should be labeled <code>pub</code> and generally fall into inspector functions that do not write to storage and operation functions that do. Private functions are your usual private utilities unavailable to other modules.</p>
+<p>You can call functions defined here using the <code>Self::function_name()</code> pattern you have seen before. Here is an intentionally overcomplicated example:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">decl_module! &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">Module</span>&lt;T: Trait&gt; <span class="keyword">for</span> <span class="title class_">enum</span> Call <span class="keyword">where</span> origin: T::Origin &#123;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">adder_to_storage</span>(origin, num1: <span class="type">u32</span>, num2: <span class="type">u32</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">_sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">result</span> = <span class="keyword">Self</span>::_adder(num1, num2);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">Self</span>::_store_value(result)?;</span><br><span class="line"></span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T: Trait&gt; Module&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">_adder</span>(num1: <span class="type">u32</span>, num2: <span class="type">u32</span>) <span class="punctuation">-&gt;</span> <span class="type">u32</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">final_answer</span> = num1.<span class="title function_ invoke__">checked_add</span>(num2).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;Overflow when adding&quot;</span>)?;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">_store_value</span>(value: <span class="type">u32</span>) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">        &lt;myStorage&lt;T&gt;&gt;::<span class="title function_ invoke__">put</span>(value);</span><br><span class="line"></span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Remember that we still need to follow a “verify first, write last” pattern, so it is important to not daisy chain private functions which do writes to storage where there is a chance one will throw an error.</p>
+<p>So, in our example, we moved most of the logic to the function <code>mint</code>:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;T: Trait&gt; Module&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">mint</span>(to: T::AccountId, kitty_id: T::Hash, new_kitty: Kitty&lt;T::Hash, T::Balance&gt;) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">owned_kitty_count</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">owned_kitty_count</span>(&amp;to);</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">new_owned_kitty_count</span> = owned_kitty_count.<span class="title function_ invoke__">checked_add</span>(<span class="number">1</span>).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;Overflow adding a new kitty to account Balance&quot;</span>)?;</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">let</span> <span class="variable">all_kitties_count</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">all_kitties_count</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">new_all_kitties_count</span> = all_kitties_count.<span class="title function_ invoke__">checked_add</span>(<span class="number">1</span>).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;Overflow adding a new kitty&quot;</span>)?;</span><br><span class="line"></span><br><span class="line">        &lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(kitty_id, new_kitty);</span><br><span class="line">        &lt;KittyOwner&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(kitty_id, &amp;to);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// (`index` is `count - 1` = `new_all_kitties_count - 1` = `all_kitties_count`,)</span></span><br><span class="line">        &lt;AllKittiesArray&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(all_kitties_count, kitty_id); </span><br><span class="line">        &lt;AllKittiesCount&lt;T&gt;&gt;::<span class="title function_ invoke__">put</span>(new_all_kitties_count);</span><br><span class="line">        &lt;AllKittiesIndex&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(kitty_id, all_kitties_count);</span><br><span class="line">        &lt;OwnedKittiesArray&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>((to.<span class="title function_ invoke__">clone</span>(), owned_kitty_count), kitty_id);</span><br><span class="line">        &lt;OwnedKittiesCount&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;to, new_owned_kitty_count);</span><br><span class="line">        &lt;OwnedKittiesIndex&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(kitty_id, owned_kitty_count);</span><br><span class="line">        &lt;OwnedKitty&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(&amp;to, kitty_id);</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">Self</span>::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">Created</span>(to, kitty_id));</span><br><span class="line">        </span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Set-the-price-of-a-Kitty"><a href="#Set-the-price-of-a-Kitty" class="headerlink" title="Set the price of a Kitty"></a>Set the price of a Kitty</h2><p>Now, every kitty has a <code>price</code> attribute that we have set it to <code>0</code> as defalut. If we want to set the price of a kitty, we will need to pull down the <code>Kitty</code> object, update the price, and push it back into the storage.</p>
+<h3 id="Sanity-Checks"><a href="#Sanity-Checks" class="headerlink" title="Sanity Checks"></a>Sanity Checks</h3><p>Before doing this, we need to do sanity checks. Since we are going to start letting users call public functions that our runtime exposes, and that means opportunity for our users to give poor input or even maliciously. So if we are creating a function which updates the value of an object, the first thing we better do is make sure the object exists at all.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ensure!(&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(kitty_id), <span class="string">&quot;This kitty does not exists.&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Permissioned-Functions"><a href="#Permissioned-Functions" class="headerlink" title="Permissioned Functions"></a>Permissioned Functions</h3><p>Although everyone could call our <code>create_kitty()</code> function with a message, only the owner of the kitty is allowed to set the price. For modifying a <code>Kitty</code>, we need to get the owner of the kitty, and ensure that it is the same as the <code>sender</code>.</p>
+<p>KittyOwner stores a mapping to an <code>Option&lt;T::AccountId&gt;</code> since a given <code>Hash</code> may not point to a generated and owned Kitty yet. This means, whenever we fetch the owner of a kitty, we need to resolve the possibility that it returns None. This could be caused by bad user input or even some sort of problem with our runtime, but checking will help prevent these kinds of problems.</p>
+<blockquote>
+<p>其实这里说的不是很准确，每个kitty应该都有owner，如果是输入错误那么实际上在第一次检查的时候，就已经发现这个kitty不存在了。(In fact, every kitty should have its owner, if it does not have a owner, it should not exist.)</p>
+</blockquote>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// kitty&#x27;s owner</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">owner</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">owner_of</span>(kitty_id).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;No owner for this kitty&quot;</span>)?;</span><br><span class="line">ensure!(owner == sender, <span class="string">&quot;You are not the owner of the kitty&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>So the <code>set_price</code> function looks like:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">set_price</span>(origin, kitty_id: T::Hash, new_price: T::Balance) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line">    ensure!(&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(kitty_id), <span class="string">&quot;This kitty does not exists.&quot;</span>)</span><br><span class="line"></span><br><span class="line">         <span class="comment">// kitty&#x27;s owner</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">owner</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">owner_of</span>(kitty_id).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;No owner for this kitty&quot;</span>)?;</span><br><span class="line">    ensure!(owner == sender, <span class="string">&quot;You are not the owner of the kitty&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">kitty</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">kitty</span>(kitty_id);</span><br><span class="line">    kitty.price = new_price</span><br><span class="line"></span><br><span class="line">    &lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">insert</span>(kitty_id, kitty)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">Self</span>::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">PriceSet</span>(sender, kitty_id, new_price));</span><br><span class="line">         </span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Transferring-a-Kitty"><a href="#Transferring-a-Kitty" class="headerlink" title="Transferring a Kitty"></a>Transferring a Kitty</h2><p>Ownership is entirely managed by our storage, so a <code>transfer_kitty</code> function is really only modifying our existing storage to reflect the state. Here are the storage items we need to update:</p>
+<ul>
+<li>Change the global kitty owner</li>
+<li>Change the owned kitty count of each user</li>
+<li>Change the owned kitty index of the kitty</li>
+<li>Change the owned kitty map for each user</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">transfer</span>(origin, to: T::AccountId, kitty_id: T::Hash) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">owner</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">owner_of</span>(kitty_id).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;No owner for this kitty&quot;</span>)?;</span><br><span class="line">    ensure!(owner == sender, <span class="string">&quot;You are not the owner of this kitty&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">Self</span>::<span class="title function_ invoke__">transfer_from</span>(sender, to, kitty_id)?;</span><br><span class="line">            </span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">buy_kitty</span>(origin, kitty_id: T::Hash, max_price: T::Balance) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?;</span><br><span class="line"></span><br><span class="line">    ensure!(&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(kitty_id), <span class="string">&quot;This kitty does not exists.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">owner</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">owner_of</span>(kitty_id).<span class="title function_ invoke__">ok_or</span>(<span class="string">&quot;No owner for this kitty&quot;</span>)?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">kitty</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">kitty</span>(kitty_id);</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">let</span> <span class="variable">kitty_price</span> = kitty.price;</span><br><span class="line">    ensure!(!kitty_price.<span class="title function_ invoke__">is_zero</span>(), <span class="string">&quot;Price is zero.&quot;</span>);</span><br><span class="line">    ensure!(kitty_price &lt;= max_price, <span class="string">&quot;The cat you want to by cost more than your max price&quot;</span>);</span><br><span class="line">            </span><br><span class="line">    &lt;balances::Module&lt;T&gt; <span class="keyword">as</span> Currency&lt;_&gt;&gt;::<span class="title function_ invoke__">transfer</span>(&amp;sender, &amp;owner, kitty_price)?;</span><br><span class="line">    <span class="keyword">Self</span>::<span class="title function_ invoke__">transfer_from</span>(owner.<span class="title function_ invoke__">clone</span>(), sender.<span class="title function_ invoke__">clone</span>(), kitty_id)</span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;`owner` is shown to own the kitty; \</span></span><br><span class="line"><span class="string">                `owner` must have greater than 0 kitties, so transfer cannot cause underflow; \</span></span><br><span class="line"><span class="string">                `all_kitty_count` shares the same type as `owned_kitty_count` \</span></span><br><span class="line"><span class="string">                and minting ensure there won&#x27;t ever be more than `max()` kitties, \</span></span><br><span class="line"><span class="string">                which means transfer cannot cause an overflow; \</span></span><br><span class="line"><span class="string">                qed&quot;</span>);</span><br><span class="line"></span><br><span class="line">    kitty.price = &lt;T::Balance <span class="keyword">as</span> As&lt;<span class="type">u64</span>&gt;&gt;::<span class="title function_ invoke__">sa</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">Self</span>::<span class="title function_ invoke__">deposit_event</span>(RawEvent::<span class="title function_ invoke__">Bought</span>(sender, owner, kitty_id, kitty_price));</span><br><span class="line">            </span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(())    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Buying-a-Kitty"><a href="#Buying-a-Kitty" class="headerlink" title="Buying a Kitty"></a>Buying a Kitty</h2><p>First, make sure that the kitty is indeed for sale. To simplified our problem, just define that any kitty with default price of 0 is not for sale.</p>
+<p>Then, we need to make a payment. So far our chain has been completely independent of our internal currency provided by the <code>Balances</code> module. The <code>Balances</code> module gives us access to completely manage the internal currency of every user, which means we need to be careful how we use it.</p>
+<p>Fortunately, the <code>Balances</code> module expose a trait called <code>Currency</code> which implements a function called <code>transfer()</code> which allows you to safely transfer units from one account to another, checking for enough balance, overflow, underflow, and even account creation as a result of getting tokens.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;balances::Module&lt;T&gt; <span class="keyword">as</span> Currency&lt;_&gt;&gt;::<span class="title function_ invoke__">transfer</span>(&amp;sender, &amp;owner, kitty_price)?;</span><br></pre></td></tr></table></figure>
+<h2 id="Breeding-a-Kitty"><a href="#Breeding-a-Kitty" class="headerlink" title="Breeding a Kitty"></a>Breeding a Kitty</h2><p>Probably the most unique part of the origina; CryptoKitties game is the ability to breed new kitties from existing ones.</p>
+<p>We have prepared our <code>Kitty</code> object with this in mind, introducing <code>dna</code> and <code>gen</code> which will be used in forming brand new kitty offspring.</p>
+<p>In our runtime, DNA is a 256 bit hash, which is represented by as a bytearray in our code, and a hexadecimal string in our upcoming UI.</p>
+<p>This means that there are 32 elements, each of which can be a value from 0 - 255. We will use these elements to determine which traits our kitties have. For example, the first index of the byte array can determine the color of our kitty(from a range of 256 colors); the nex element could represent the eye shape, etc…</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">breed_kitty</span>(origin, kitty_id_1: T::Hash, kitty_id_2: T::Hash) <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sender</span> = <span class="title function_ invoke__">ensure_signed</span>(origin)?</span><br><span class="line">    ensure!(&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(kitty_id_1), <span class="string">&quot;Kitty1 doenot exist&quot;</span>);</span><br><span class="line">    ensure!(&lt;Kitties&lt;T&gt;&gt;::<span class="title function_ invoke__">exists</span>(kitty_id_2), <span class="string">&quot;Kitty2 doenot exist&quot;</span>)</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">nonce</span> = &lt;Nonce&lt;T&gt;&gt;::<span class="title function_ invoke__">get</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">random_hash</span> = (&lt;system::Module&lt;T&gt;&gt;::<span class="title function_ invoke__">random_seed</span>(),sender, nonce).<span class="title function_ invoke__">using_encoded</span>(&lt;T asystem::Trait&gt;::Hashing::hash);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> <span class="variable">kitty_1</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">kitty</span>(kitty_id_1);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">kitty_2</span> = <span class="keyword">Self</span>::<span class="title function_ invoke__">kitty</span>(kitty_id_2)</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">final_dna</span> = kitty_1.dna;</span><br><span class="line">    <span class="comment">// &#x27;Zips up&#x27; two iterators into a single iterator opairs. tuple</span></span><br><span class="line">    <span class="title function_ invoke__">for</span> (i, (dna_2_element, r)) <span class="keyword">in</span> kitty_2.dna.<span class="title function_ invoke__">as_ref</span>().<span class="title function_ invoke__">it</span>().<span class="title function_ invoke__">zip</span>(random_hash.<span class="title function_ invoke__">as_ref</span>().<span class="title function_ invoke__">iter</span>()).<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> r % <span class="number">2</span> == <span class="number">0</span> &#123;</span><br><span class="line">            final_dna.<span class="title function_ invoke__">as_mut</span>()[i] = *dna_2_element;</span><br><span class="line">        &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> <span class="variable">new_kitty</span> = Kitty &#123;</span><br><span class="line">        id: random_hash,</span><br><span class="line">        dna: final_dna,</span><br><span class="line">        price: &lt;T::Balance <span class="keyword">as</span> As&lt;<span class="type">u64</span>&gt;&gt;::<span class="title function_ invoke__">sa</span>(<span class="number">0</span>),</span><br><span class="line">        gen: cmp::<span class="title function_ invoke__">max</span>(kitty_1.gen, kitty_2.gen) + <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">Self</span>::<span class="title function_ invoke__">mint</span>(sender, random_hash, new_kitty)?</span><br><span class="line">    &lt;Nonce&lt;T&gt;&gt;::<span class="title function_ invoke__">mutate</span>(|n| *n += <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="title function_ invoke__">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/2019/11/27/Linux/loongson/loongson_on_ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/11/05/Rust/Rust-by-example-notes/Primitives/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Primitives</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            John Doe &copy; 2022 
+            <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png" /></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a target="_blank" rel="noopener" href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
