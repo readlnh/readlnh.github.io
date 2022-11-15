@@ -1,7 +1,7 @@
 ---
 title: How to setup environment for loongson LS1C0300B(mipsel) on Ubuntu18.04
 date: 2019-11-27 15:48
-tags: 
+tags:
     - loognson
     - mipsel
     - cross-compile
